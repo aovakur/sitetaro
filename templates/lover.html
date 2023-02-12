@@ -1,0 +1,98 @@
+
+{% extends 'index.html' %}
+
+{% block content %}
+
+	  <h1>Расклад на любомого</h1>
+	  
+		<table >
+		<tbody>
+
+		<tr>
+		{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card0.img}}"></a></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		<td></td>
+		<td></td>
+		{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card1.eng}}"><img class="fit-picture2" src="{{context.card1.img}}"></a></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+
+		<tr>
+		<td></td>
+		{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card5.eng}}"><img class="fit-picture2" src="{{context.card5.img}}"></a></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card2.eng}}"><img class="fit-picture2" src="{{context.card2.img}}"></a></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		</tr>
+		<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		</tr>
+		<tr>
+		<td></td>
+		{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card4.eng}}"><img class="fit-picture2" src="{{context.card4.img}}"></a></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card3.eng}}"><img class="fit-picture2" src="{{context.card3.img}}"></a></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		</tr>
+		</table>
+		</tbody>
+
+<form class="user" action="{{lover}}" method="POST">
+<button class="btn btn-lg btn-primary btn-block" type="submit">Сгенерировать расклад</button>
+</form>
+
+{% if data == 1 %}
+<p> 1- О чем он сейчас думает?</p>
+<a target="_blank" href="/taro/{{context.card0.eng}}">
+<img class="fit-picture2" src="{{context.card0.img}}">
+</a>
+<p> 2 - Что у него на сердце?</p>
+<a target="_blank" href="/taro/{{context.card1.eng}}">
+<img class="fit-picture2" src="{{context.card1.img}}">
+</a>
+<p> 3 - Что случится</p>
+<a target="_blank" href="/taro/{{context.card2.eng}}">
+<img class="fit-picture2" src="{{context.card2.img}}">
+</a>
+<p> 4 - Что он желает</p>
+<a target="_blank" href="/taro/{{context.card3.eng}}">
+<img class="fit-picture2" src="{{context.card3.img}}">
+</a>
+<p> 5 - Чего он не ожидает</p>
+<a target="_blank" href="/taro/{{context.card4.eng}}">
+<img class="fit-picture2" src="{{context.card4.img}}">
+</a>
+<p> 6 - Что у него в жизни</p>
+<a target="_blank" href="/taro/{{context.card5.eng}}">
+<img class="fit-picture2" src="{{context.card5.img}}">
+</a>
+{% endif %}
+
+{% endblock %}

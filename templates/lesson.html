@@ -1,0 +1,16 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+
+<center><h2>Материал урока </h2></center>
+{% autoescape true %}
+{{data}}
+{% endautoescape %}
+
+<center><h2>Домашнее задание</h2></center>
+{% autoescape true %}
+{{homework}}
+{% endautoescape %}
+
+
+{% endblock %}

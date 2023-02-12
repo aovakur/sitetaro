@@ -1,0 +1,26 @@
+
+
+
+{% extends 'index.html' %}
+
+{% block content %}
+<style type="text/css">
+p{
+  
+}
+
+.fit-picture{
+    width: 240px;
+}
+.text
+{
+    padding-left: 30px;
+}
+</style> 
+<h1>Такой страницы не существует</h1>
+<p> Вам выпала карта {{card.carta}} </p>
+<a target="_blank" href="{{url}}{{card.type_carta_eng}}/{{card.eng}}"><img class="fit-picture" src="{{card.img}}"></a>
+<p>{{card.graph_simphol}}</p>
+<p>{{card.general_carta}}</p>
+
+{% endblock %}

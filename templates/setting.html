@@ -1,0 +1,38 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+<div class="table-responsive">
+          <form class="user" action="/settings" method="POST">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Наименование сайта</label>
+              <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" name="name" value="{{data.site_name}}">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Наименование сайта (на английском)</label>
+              <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" name="name_eng" value="{{data.site_name_eng}}">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Почта администратора</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name="email" value="{{data.email_admin}}">
+             </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">SMTP сервер для отправки почты</label>
+              <input class="form-control" type="text" placeholder="Default input" aria-label="default input example" name="smtp" value="{{data.email_smtp}}">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Описание сайта</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="description">{{data.description}}</textarea>
+            </div>
+              <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Мета теги</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="meta_tag">{{data.meta_tag}}</textarea>
+            </div>
+            
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button class="btn btn-primary" type="submit">Обновить данные</button>
+          </div>
+        </form>
+      </div>
+ 
+</div>
+{% endblock %}

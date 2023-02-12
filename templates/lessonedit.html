@@ -1,0 +1,53 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+
+
+<p>
+
+<form class="user" action="/backoffice/curses/edit/curs={{lesson.curse}}&lesson={{lesson.lesson}}" method="POST">
+
+<table>
+    <tr>
+    <td><b>Номер курса</b></td>
+    <td><b><input class="form-control_lesson" type="text" placeholder="Default input" value="{{lesson.curse}}" name="curse" readonly></b></td>
+    </tr>
+
+    <tr>
+    <td><b>Номер урока</b></td>
+    <td><b><input class="form-control_lesson" type="text" placeholder="Default input" value="{{lesson.lesson}}" name="lesson" readonly></b></td>    
+    </tr>
+
+    <tr>
+    <td><b>Наименование урока</b></td>
+    <td><input class="form-control_lesson" type="text" placeholder="Default input" value="{{lesson.name}}" name="name"> </td>
+    </tr>
+
+    <tr>
+    <td><b>Описание урока</b></td>
+    <td><textarea class="form-control_lesson2" id="exampleFormControlTextarea1" rows="3" name="description">{{lesson.description}}</textarea></td>
+    </tr>
+
+    <tr>
+    <td><b>Дата создания урока</b></td>
+    <td><input class="form-control_lesson" type="text" placeholder="Default input" value={{lesson.created_on}} name="created_on" readonly></td>
+    </tr>
+
+
+</table>
+<b>Содержание урока</b>   
+
+<textarea id="myTextarea" name="data" >{{data}}</textarea>
+
+<b>Домашнее задание</b>  
+<textarea id="myTextarea2" name="homework">{{homework}}</textarea>
+
+</br>
+<div class = "d-grid gap-2 d-md-flex justify-content-md-end">
+<button type="button" class="btn btn-success buttonleft" onclick="location.href='/backoffice/curses/{{lesson.curse}}';">Вернуться к урокам курса</button> 
+<button class="btn btn-primary buttonleft" type="submit">Обновить запись</button>
+</div>
+</form>
+</div>
+
+{% endblock %}

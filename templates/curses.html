@@ -1,0 +1,68 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+
+{% if errorcurs !=0 %}
+<script>
+    alert("Не удалось обновить курс  " + {{errorcurs}} + ", сначала удалите его уроки")
+</script>
+{% endif %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Наименование курса</th>
+                                            <th>Ссылка на курс</th>
+                                            <th>Автор</th>
+                                            <th>Стоимость</th>
+                                            <th>Картинка</th>
+                                            <th>Создан</th>
+                                            <th>Удалить курс</th>
+                                            <th>Редактировать курс</th>
+                                            <th>Уроки курса</th>
+                                        </tr>
+                                    </thead>
+
+
+
+{% for data in context %}
+<tbody>
+    <tr>
+      <td>{{data.curses_id}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.url}}</td>
+      <td>{{data.author}}</td>
+      <td>{{data.cost}}</td>
+      <td>{{data.picture}}</td>
+      <td>{{data.created_on}}</td>
+
+      <td>
+          
+          <form class="user" action="/backoffice/curses/{{data.curses_id}}/del=true" method="POST">
+          <button class="btn btn-outline-danger" type="submit">Удалить</button>
+          </form>
+      </td>
+
+      <td>
+       <form class="user" action="/backoffice/curses/edit={{data.curses_id}}" method="GET">
+          <button class="btn btn-outline-primary" type="submit">Редактирование</button>
+          </form>
+      </td>         
+     
+        <td>
+          
+          <form class="user" action="/backoffice/curses/{{data.curses_id}}" method="GET">
+          <button class="btn btn-outline-info" type="submit">Уроки курса</button>
+          </form>
+      </td>
+    </tr>
+  </tbody>
+
+{% endfor %}
+
+                                </table>
+                            </div>
+                        
+
+{% endblock %}

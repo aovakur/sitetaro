@@ -1,0 +1,12 @@
+
+
+{% extends 'index.html' %}
+
+{% block content %}
+  
+<p>{{curse.name}}</p>
+<p><img src="{{curse.picture}}"></p>
+<p>{{curse.description}}</p>
+<p><a href="/curses/subscribe/{{curse.curses_id}}">Записаться на курс</a></p>
+
+{% endblock %}

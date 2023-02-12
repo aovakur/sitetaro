@@ -1,0 +1,562 @@
+
+{% extends 'index.html' %}
+
+{% block content %}
+
+<style type="text/css">
+select{
+	border-radius: 5px;
+	width: 100px;
+	height: 42px;
+	border: none;
+	font-size: 17px;
+}
+form{
+	padding-top: 136px;
+	padding: 16px 32px;
+ 
+	margin: 0 18px 12px 0;
+	border: none;
+	outline-offset: -1px;
+		    width:400px;
+	border-radius: 5px;
+}
+input{
+width: 100px;
+	height: 42px;
+border-radius: 5px;
+	background: rgb(76, 600, 233);
+	font-size: 17px;
+cursor: pointer;
+background: rgb(181,222,249)
+}
+
+table{
+		  vertical-align: top;
+	  border-spacing: 0;
+  font-size: 19px;
+  border-radius: 5px;
+  margin-top:30px;
+}
+
+th {
+   border: 1px solid #eceeef;
+
+}
+td {
+   border: 1px solid #eceeef;
+   height: 100px;
+   width:164px;
+   position: relative;
+}
+span{
+	font-size: 17px;
+	text-align:justify;
+}
+
+p{
+  text-align:justify;
+  line-height: 20px;
+  margin-bottom: 15px;
+}
+
+.toph1{
+   position: absolute;
+}
+.custom-select
+{
+  display: inline-block;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem 1.75rem .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #f1d558;
+  vertical-align: middle;
+  background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") right .75rem center/8px 10px no-repeat;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  appearance: none;
+}
+.btn{
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  margin-left: 20px;
+}
+.click1{
+  width: 200px;
+  background: #d8d8d8;
+  border: 1px solid #FFFFFF
+}
+.click2{
+  width: 130px;
+  background: #f1d558;
+  border: 1px solid #FFFFFF;
+  margin-lefpx;
+}
+.table-bordered
+{
+  border: 1px solid #dee2e6;
+  margin-left: -5px;
+}
+.click:active { background: #f1d558; } 
+.click:hover { background:  #f1d558;} /* при нажатии */
+input:hover { background: #f1d558 ;} /* при наведении курсора мышки */
+input:active { background: #f1d558; }  /* при нажатии */
+  
+  
+.container1{
+ padding-right: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.encoding{
+  padding-right: 15px;
+  margin-top: 10px;
+
+}
+
+.item{
+  margin-left: auto;
+  width: 6em
+}
+
+.wrapper{
+  width: 700px;
+
+}
+
+</style>
+
+<h1>Квадрат Пифагора</h1>
+<p>Квадрат Пифагора - это отдельное направление нумерологии. По сути это учение берет свое начало от египетских жрецов. Именно они одни из первых начали сопоставлять качества характера человека в зависимости от чисел. Пифагор взял за основу эти знания о числах и применил к ним математический аспект, основанный на гармонии квадрата.
+
+  Пифагор и его последовали расширили возможности египетской системы, дополнив значения отдельных цифр значениями целевых линий квадрата Пифагора. Таким образом новое учение помогало выявить возможную цель жизни человека.
+</p>
+
+     <input type="date" class="click1" name="date"  id="date" value="2018-07-22">
+     <input type="button" class="click2" value="Рассчитать" onclick="GetStatus()">
+  <p></p>
+    <table class="table-bordered">
+      <tr>
+        <td><h6>Характер, сила воли</h6><div id="id1"></div></td>
+        <td><h6>Энергетика, харизма</h6><div id="id4"></div></td>
+        <td><h6>Познание, творчество</h6><div id="id7"></div></td>
+      </tr>
+      <tr>
+        <td><h6>Здоровье, красота</h6><div id="id2"></div></td>
+        <td><h6>Логика, интуиция</h6><div id="id5"></div></td>
+        <td><h6>Трудолюбие, мастерство</h6><div id="id8"></div></td>
+      </tr>
+      <tr>
+        <td><h6>Удача, везение </h6><div id="id3"></div></td>
+        <td><h6>Чувство долга</h6><div id="id6"></div></td>
+        <td><h6>Развитие памяти</h6><div id="id9"></div></td>
+      </tr>
+    </table>
+
+
+
+<div class="encoding">
+    <div id="encod1"></div>
+    <div id="text1"></div>
+
+    <div id="encod2"></div>
+    <div id="text2"></div>
+
+    <div id="encod3"></div>
+    <div id="text3"></div>
+
+    <div id="encod4"></div>
+    <div id="text4"></div>
+
+    <div id="encod5"></div>
+    <div id="text5"></div>
+
+    <div id="encod6"></div>
+    <div id="text6"></div>
+
+    <div id="encod7"></div>
+    <div id="text7"></div>
+
+    <div id="encod8"></div>
+    <div id="text8"></div>
+
+    <div id="encod9"></div>
+    <div id="text9"></div>
+</div>
+
+ <script>
+    function GetStatus() {
+
+    var date1 = document.getElementById("date").value;
+		var selectday = date1[8] +""+ date1[9];
+    var selectmonth =  date1[5] +""+ date1[6];
+		var selectyear= date1[0] +""+ date1[1] + ""+ date1[2]+ ""+ date1[3]
+
+		if (isNaN(Number(selectday)) || isNaN(Number(selectmonth)) || isNaN(Number(selectyear)) ){
+      alert("Укажите дату");
+    }
+
+    else 
+    {
+    var total="";
+    var totalstring=0;
+    let firstday=0;
+    if(Number(selectday)<10){
+      totalstring=totalstring+Number(selectday);
+      firstday = Number(selectday);
+    } 
+    else {
+      totalstring =Number(selectday[0]) + Number(selectday[1]) ;
+      firstday = Number(selectday[0]);}
+    total = selectday;
+    if(Number(selectmonth)<=9){
+         totalstring=totalstring+Number(selectmonth);} 
+    else {totalstring =totalstring+ Number(selectmonth[0]) + Number(selectmonth[1]);}
+
+    total = total + "" + selectmonth;
+    ;
+    totalstring = totalstring + Number(selectyear[0]) + Number(selectyear[1]) + Number(selectyear[2]) + Number(selectyear[3]);
+    total = total + "" + selectyear;
+
+    var cheslo2=0;
+    if (Number(totalstring)<=9){
+        total = total + "" + totalstring;
+        cheslo2=Number(totalstring);
+    }
+    else {
+      totalstring = totalstring + "";
+      total = total + "" + totalstring;
+      cheslo2=Number(totalstring[0]) + Number (totalstring[1]);
+     
+    }
+   
+
+    total = total +""+cheslo2;
+    var cheslo3= 0;
+    
+    cheslo3 = totalstring - (Number(firstday)*2);
+   
+    if (cheslo3 < 0) {
+      cheslo3=cheslo3 * (-1);
+    }
+
+    total = total +""+String(cheslo3);
+    cheslo_pre4 = cheslo3 + "";
+
+    var cheslo4 = 0
+    if (Number(cheslo_pre4)<10){
+      cheslo4 = Number(cheslo_pre4);
+    }
+    else 
+    {
+      cheslo4 = Number(cheslo_pre4[0]) + Number(cheslo_pre4[1]); 
+    }
+    total = total +""+cheslo4;
+    let item_id1="";
+    let item_id2="";
+    let item_id3="";
+    let item_id4="";
+    let item_id5="";
+    let item_id6="";
+    let item_id7="";
+    let item_id8="";
+    let item_id9="";
+    let count_id1=0;
+    let count_id2=0;
+    let count_id3=0;
+    let count_id4=0;
+    let count_id5=0;
+    let count_id6=0;
+    let count_id7=0;
+    let count_id8=0;
+    let count_id9=0;
+    
+    let i=0;
+    
+    while (i<total.length){
+      switch(total[i]){
+        case '1': 
+          item_id1 = item_id1 + total[i];
+          count_id1 = count_id1 +1;
+          break;
+        case '2': 
+          item_id2 = item_id2 + total[i];
+          count_id2 = count_id2 +1;
+          break;
+        case '3': 
+          item_id3 = item_id3 + total[i];
+          count_id3 = count_id3 +1;
+          break;
+        case '4': 
+          item_id4 = item_id4 + total[i];
+          count_id4 = count_id4 +1;
+          break;
+        case '5': 
+          item_id5 = item_id5 + total[i];
+          count_id5 = count_id5 +1;
+          break; 
+        case '6': 
+          item_id6 = item_id6 + total[i];
+          count_id6 = count_id6 +1;
+          break;    
+        case '7': 
+          item_id7 = item_id7 + total[i];
+          count_id7 = count_id7 +1;
+          break; 
+        case '8': 
+          item_id8 = item_id8 + total[i];
+          count_id8 = count_id8 +1;
+          break;   
+        case '9': 
+          item_id9 = item_id9 + total[i];
+          count_id9 = count_id9 +1;
+          break;   
+        }
+
+        i=i+1;
+      }
+
+    for (i = 1; i <10 ; i++) {
+      document.getElementById("text"+i).innerHTML = "";
+      document.getElementById("encod"+i).innerHTML = "";
+      document.getElementById("id"+i).innerHTML = "";
+    }
+
+    var id1 = document.getElementById("id1");
+    var new_id1 = document.createElement("div");
+    new_id1.className ="item";
+    new_id1.innerHTML = '<p>'+item_id1+'</p>';
+    id1.append(new_id1);
+
+    var id2 = document.getElementById("id2");
+    var new_id2 = document.createElement("div");
+    new_id2.className ="item";
+    new_id2.innerHTML ='<p>'+item_id2+'</p>';
+    id2.append(new_id2)+'</div>';
+    
+    var id3 = document.getElementById("id3");
+    var new_id3 = document.createElement("div");
+    new_id3.className ="item";
+    new_id3.innerHTML ='<p>'+item_id3+'</p>';
+    id3.append(new_id3);
+    
+    var id4 = document.getElementById("id4");
+    var new_id4 = document.createElement("div");
+    new_id4.className ="item";
+    new_id4.innerHTML ='<p>'+item_id4+'</p>';
+    id4.append(new_id4);
+    
+    var id5 = document.getElementById("id5");
+    var new_id5 = document.createElement("div");
+    new_id5.className ="item";
+    new_id5.innerHTML ='<p>'+item_id5+'</p>';
+    id5.append(new_id5);
+    
+    var id6 = document.getElementById("id6");
+    var new_id6 = document.createElement("div");
+    new_id6.className ="item";
+    new_id6.innerHTML ='<p>'+item_id6+'</p>';
+    id6.append(new_id6);
+    
+    var id7 = document.getElementById("id7");
+    var new_id7 = document.createElement("div");
+    new_id7.className ="item";
+    new_id7.innerHTML ='<p>'+item_id7+'</p>';
+    id7.append(new_id7);
+    
+    var id8 = document.getElementById("id8");
+    var new_id8 = document.createElement("div");
+    new_id8.className ="item";
+    new_id8.innerHTML ='<p>'+item_id8+'</p>';
+    id8.append(new_id8);
+    
+    var id9 = document.getElementById("id9");
+    var new_id9 = document.createElement("div");
+    new_id9.className ="item";
+    new_id9.innerHTML ='<p>'+item_id9+'</p>';
+    id9.append(new_id9);
+
+    if(count_id1<1) 
+    {
+      item_id1="нет цифр";
+    }
+    if(count_id2<1) 
+    {
+      item_id2="нет цифр";
+    }
+    if(count_id3<1) 
+    {
+      item_id3="нет цифр";
+    }
+    if(count_id4<1) 
+    {
+      item_id4="нет цифр";
+    }
+    if(count_id5<1) 
+    {
+      item_id5="нет цифр";
+    }
+    if(count_id6<1) 
+    {
+      item_id6="нет цифр";
+    }
+    if(count_id7<1) 
+    {
+      item_id7="нет цифр";
+    }
+    if(count_id8<1) 
+    {
+      item_id8="нет цифр";
+    }
+    if(count_id9<1) 
+    {
+      item_id9="нет цифр";
+    }
+    var encod1 = document.getElementById("encod1");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Характер, сила воли — </b>" + item_id1;
+    encod1.append(new_id1);
+
+    switch (count_id1){
+      case 4: 
+        var text1 = document.getElementById("text1");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Лидер» — спокойный и всегда уверенный в себе. Это две главные черты. Негромко, но весомо заявляет свое мнение, заставляя прислушаться или даже притихнуть остальных. Жесткость проявляет редко, но метко. Она и так в нем чувствуется. Большинство самых богатых и влиятельных людей из политики, бизнеса, военной сферы и спорта имеют характеры 1111 и 11111."
+        text1.append(new_id1);
+        break;
+      case 5: 
+        var text1 = document.getElementById("text1");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Лидер» — спокойный и всегда уверенный в себе. Это две главные черты. Негромко, но весомо заявляет свое мнение, заставляя прислушаться или даже притихнуть остальных. Жесткость проявляет редко, но метко. Она и так в нем чувствуется. Большинство самых богатых и влиятельных людей из политики, бизнеса, военной сферы и спорта имеют характеры 1111 и 11111."
+        text1.append(new_id1);
+        break;
+    }
+
+     switch (count_id2){
+      case 1: 
+        var text2 = document.getElementById("text2");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Дефицит энергии» — батарейки хватает только на то, чтобы успеть самое необходимое. Большие коллективы, аудитории и шумные тусовки изматывают. Многодневные походы и монотонная работа - туда же. А вот умеренный спорт, фитнес, йога, ну, или, как минимум, прогулки и нормальный сон жизненно необходимы."
+        text2.append(new_id1);
+        break;
+    }
+
+    switch (count_id3){
+      case 3: 
+        var text3 = document.getElementById("text3");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Импульсивный ученый и творец» — имеет серьезные перспективы овладеть любой точной наукой, техникой, алгоритмом или системой знаний, заявить о себе в любых творческих сферах. Вдобавок к этому еще фантазер и экспериментатор — это то, что отличает от 33 и 3. Из опасностей: слишком широкий кругозор, часто больная фантазия и распыление интересов, невозможность сконцентрироваться на чем-то, требующем большого погружения. Способности могут проявляться спонтанно и не всегда в тот момент, когда это требуется"
+        text3.append(new_id1);
+        break;
+    }
+
+    switch (count_id4){
+      case 1: break;
+      case 2: break;
+      default: 
+        var text4 = document.getElementById("text4");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Низкий запас здоровья» — здоровье слабое и подвергать его лишнему напряжению не стоит. Фитнес, йога, правильное питание, профилактика — лучшие друзья. Делать ставку на внешние данные и красоту такому человеку не стоит. Лучше обратить внимание на другие сильные качества и сфокусироваться на них в поисках себя. "
+        text4.append(new_id1);
+        break;
+    }
+
+    switch (count_id5){
+      case 1: break;
+      case 2: break;
+      default: 
+        var text5 = document.getElementById("text5");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Логика — не ваш конек». Это черта мечтателей, витающих в облаках. Плохо воспринимают длинные цепочки фактов, рассуждений. Могут быть легко запутаны, поэтому постоянно бьются о грабли своих ошибок. Более эмоциональны, нежели рациональны."
+        text5.append(new_id1);
+        break;
+    }
+
+    switch (count_id6){
+      case 1:  
+        var text6 = document.getElementById("text6");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Задатки трудолюбия и мастерства» — по настроению человек может вполне неплохо справиться с любой работой, требущей приложения трудолюбия, аккуратности и техники процесса. Конечно, ювелиром он сразу не станет, но будь то строительство дома, ремонт или что-то не требующее сверх искусных навыков, то, скорее всего, получится. А в процессе он сможет еще и отточить умения."
+        text6.append(new_id1);
+        break;
+    }
+
+    switch (count_id7){
+      default:  
+        var text7 = document.getElementById("text7");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Звезд с неба не хватает» — все нужно достигать самому. При этом делать много попыток, не ожидая внезапного успеха. Но согласитесь: достичь честного успеха своим трудом и случайного успеха по воле фортуны - разные вещи. Поэтому смотрите на другие свои сильные стороны и реализуйте себя, раскрывая их."
+        text7.append(new_id1);
+        break;
+    }
+
+     switch (count_id8){
+      case 1:  
+        var text8 = document.getElementById("text8");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Чувство долга в меру» — долга перед близкими и друзьями такие люди обычно не избегают. Но не более того. Их инициатива что-то дать окружающим и обществу низка. Но хотя бы не забывают тех, кто рядом. Самопожертвование — это тоже не про них."
+        text8.append(new_id1);
+        break;
+    }
+
+    switch (count_id9){
+      case 2:  
+        var text9 = document.getElementById("text9");
+        var new_id1 = document.createElement("p");
+        new_id1.innerHTML = "«Светлая голова» — любая учеба или работа с информацией дается очень легко. И это часто вызывает скуку и нежелание. Эрудитом и интеллектуалом такому человеку стать просто. Но на самом деле следует искать действительно интересный и глубокий предмет применения своего ума. И чем сложнее он будет, тем большим будет интерес и, соответственно, результат. "
+        text9.append(new_id1);
+        break;
+    }
+
+    var encod2 = document.getElementById("encod2");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Энергетика, харизма  — </b>" + item_id2;
+    encod2.append(new_id1);
+      
+    var encod3 = document.getElementById("encod3");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Познание, творчество  — </b>" + item_id3;
+    encod3.append(new_id1);
+
+    var encod4 = document.getElementById("encod4");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Здоровье, красота  — </b>" + item_id4;
+    encod4.append(new_id1);
+
+
+    var encod5 = document.getElementById("encod5");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Логика, интуиция  — </b>" + item_id5;
+    encod5.append(new_id1);
+
+    var encod6 = document.getElementById("encod6");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Трудолюбие, мастерство  — </b>" + item_id6;
+    encod6.append(new_id1);
+
+    var encod7 = document.getElementById("encod7");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Удача, везение — </b>" + item_id7;
+    encod7.append(new_id1);
+
+    var encod8 = document.getElementById("encod8");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Чувство долга — </b>" + item_id8;
+    encod8.append(new_id1);
+
+    var encod9 = document.getElementById("encod9");
+    var new_id1 = document.createElement("p");
+    new_id1.innerHTML = "<b>Развитие памяти — </b>" + item_id9;
+    encod9.append(new_id1);
+
+   }
+   }
+      
+</script>		
+
+{% endblock %}

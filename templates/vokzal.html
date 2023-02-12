@@ -1,0 +1,284 @@
+
+{% extends 'index.html' %}
+
+{% block content %}
+	<div class="discription">
+	<h1>Вокзал для двоих</h1>
+	</div>
+	
+<form class="user1" action="{{vokzal}}" method="POST">
+   <p> <button class="btnclick" type="submit">Сгенерировать новый расклад</button>  <---- Скорее нажми на кнопку и получи свой расклад</p>
+</form>
+
+  <div class = "tabletaro">
+	<table>
+	<tbody>
+	<tr>
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card7.type_carta_eng}}/{{context.card7.eng}}"><img class="fit-picture2" src="{{context.card7.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	<td></td>
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card12.type_carta_eng}}/{{context.card12.eng}}"><img class="fit-picture2" src="{{context.card12.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	</tr>
+
+	<tr>
+		{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card8.type_carta_eng}}/{{context.card8.eng}}"><img class="fit-picture2" src="{{context.card8.img}}" ></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card1.type_carta_eng}}/{{context.card1.eng}}"><img class="fit-picture2" src="{{context.card1.img}}" ></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card4.type_carta_eng}}/{{context.card4.eng}}"><img class="fit-picture2" src="{{context.card4.img}}" > </a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card13.type_carta_eng}}/{{context.card13.eng}}"><img class="fit-picture2" src="{{context.card13.img}}" > </a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	</tr>
+
+	<tr>
+		{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card9.type_carta_eng}}/{{context.card9.eng}}"><img class="fit-picture2" src="{{context.card9.img}}" > </a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card2.type_carta_eng}}/{{context.card12.eng}}"><img class="fit-picture2" src="{{context.card2.img}}" ></a> </p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card0.type_carta_eng}}/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card0.img}}" ></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card5.type_carta_eng}}/{{context.card5.eng}}"><img class="fit-picture2" src="{{context.card5.img}}" ></a> </p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card14.type_carta_eng}}/{{context.card14.eng}}"><img class="fit-picture2" src="{{context.card14.img}}" ></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	</tr>
+
+	<tr>
+		{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card10.type_carta_eng}}/{{context.card10.eng}}"><img class="fit-picture2" src="{{context.card10.img}}" ><a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card13.type_carta_eng}}/{{context.card13.eng}}"><img class="fit-picture2" src="{{context.card3.img}}" ></a> </p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card6.type_carta_eng}}/{{context.card6.eng}}"><img class="fit-picture2" src="{{context.card6.img}}" > </a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card15.type_carta_eng}}/{{context.card15.eng}}"><img class="fit-picture2" src="{{context.card15.img}}" ></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	</tr>
+
+	<tr>
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card11.type_carta_eng}}/{{context.card11.eng}}"><img class="fit-picture2" src="{{context.card11.img}}" ></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	<td></td>
+	<td></td>
+	{% if data == 1 %}
+	<td><p><a target="_blank" href="/taro/{{context.card16.type_carta_eng}}/{{context.card16.eng}}"><img class="fit-picture2" src="{{context.card16.img}}" > </a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+	<td></td>
+	</tr>
+
+	</tbody>
+	</table>
+
+</div>
+<p></p>
+{% if data == 1 %}
+	<div class = "decoding_card">
+	
+		<h2>Ваша карта</h2>
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card0.img}}"></a>
+		</div>
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card0.eng}}">{{context.card0.carta}}</a>
+		</div>
+	</div>
+
+	 <h2>Ваше прошлое, настоящее и бущущее</h2>
+		
+	
+		<div class = "decoding_img">
+		<a target="_blank" href="/taro/{{context.card3.eng}}">  <img class="fit-picture2" src="{{context.card3.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card3.eng}}">{{context.card3.carta}}</a>
+		
+		<div class = "decoding_img">
+		<a target="_blank" href="/taro/{{context.card2.eng}}"><img class="fit-picture2" src="{{context.card2.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card2.eng}}">{{context.card2.carta}}</a>
+		</div>
+		
+		<div class = "decoding_img">
+		<a target="_blank" href="/taro/{{context.card1.eng}}"><img class="fit-picture2" src="{{context.card1.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card1.eng}}">{{context.card1.carta}}</a>
+		</div>
+
+	  <h2>Все карты из вашего будущего</h2>
+
+		<div class = "decoding_img">
+		<a target="_blank" href="/taro/{{context.card7.eng}}"> <img class="fit-picture2" src="{{context.card7.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card7.eng}}"> {{context.card7.carta}}</a>
+		</div>
+	
+		<div class = "decoding_img">
+		<a target="_blank" href="/taro/{{context.card8.eng}}"> <img class="fit-picture2" src="{{context.card8.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card8.eng}}"> {{context.card8.carta}}</a>
+		</div>
+
+		<div class = "decoding_img">
+		<a target="_blank" href="/taro/{{context.card9.eng}}"> <img class="fit-picture2" src="{{context.card9.img}}" ></a>
+		</div>
+		
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card9.eng}}"> {{context.card9.carta}}</a>
+		</div>
+
+		<div class = "decoding_img">
+		<a target="_blank" href="/taro/{{context.card10.eng}}"> <img class="fit-picture2" src="{{context.card10.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card10.eng}}"> {{context.card10.carta}}</a>
+		</div>
+	
+		<div class = "decoding_img">
+		<a target="_blank" href="/taro/{{context.card11.eng}}"> <img class="fit-picture2" src="{{context.card11.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+			<a target="_blank" href="/taro/{{context.card11.eng}}"> {{context.card11.carta}}</a>
+		</div>
+	</div>
+
+	<div class = "decoding_card">
+	<h2>Прошлое, настоящие, бущущее вашего партнера</h2>
+		
+		
+
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card6.eng}}"> <img class="fit-picture2" src="{{context.card6.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+				<a target="_blank" href="/taro/{{context.card6.eng}}"> {{context.card6.carta}}</a>
+		</div>
+	  </div>
+
+	
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card5.eng}}"> <img class="fit-picture2" src="{{context.card5.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+				<a target="_blank" href="/taro/{{context.card5.eng}}"> {{context.card5.carta}}</a>
+		</div>
+
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card4.eng}}"> <img class="fit-picture2" src="{{context.card4.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+				<a target="_blank" href="/taro/{{context.card4.eng}}"> {{context.card4.carta}}</a>
+		</div>
+	
+		<h2>Все карты из будущего партнера</h2>
+	
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card12.eng}}"> <img class="fit-picture2" src="{{context.card12.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+				<a target="_blank" href="/taro/{{context.card12.eng}}"> {{context.card12.carta}}</a>
+		</div>
+
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card13.eng}}"> <img class="fit-picture2" src="{{context.card13.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+				<a target="_blank" href="/taro/{{context.card13.eng}}"> {{context.card13.carta}}</a>
+		</div>
+	
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card14.eng}}"> <img class="fit-picture2" src="{{context.card14.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+				<a target="_blank" href="/taro/{{context.card14.eng}}"> {{context.card14.carta}}</a>
+		</div>
+		
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card15.eng}}"> <img class="fit-picture2" src="{{context.card15.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+				<a target="_blank" href="/taro/{{context.card15.eng}}"> {{context.card15.carta}}</a>
+		</div>
+
+
+		<div class = "decoding_img">
+			<a target="_blank" href="/taro/{{context.card16.eng}}"> <img class="fit-picture2" src="{{context.card16.img}}" ></a>
+		</div>
+		<div class = "decoding_text">
+				<a target="_blank" href="/taro/{{context.card16.eng}}"> {{context.card16.carta}}</a>
+		</div>
+
+
+
+{% endif %}
+
+{% endblock %}

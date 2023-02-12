@@ -1,0 +1,75 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Имя</th>
+                                            <th>Фамилия</th>
+                                            <th>Отчество</th>
+                                            <th>Whats up</th>
+                                            <th>Почта</th>
+                                            <th>Создан</th>
+                                            <th>Обновлен</th>
+                                            <th>Роль</th>
+                                            <th>Заблокирован</th>
+                                            <th>Редактировать</th>
+                                        </tr>
+                                    </thead>
+
+
+{% for user in data %}
+<tbody>
+    <tr>
+      <td>{{user.id}}</td>
+      <td>{{user.first_name}}</td>
+      <td>{{user.last_name}}</td>
+      <td>{{user.surname}}</td>
+      <td>{{user.whatsapp}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.created_on}}</td>
+      <td>{{user.updated_on}}</td>
+
+      {% if user.rule == 1 %}
+      <td>Администратор</td>
+      {% endif %}
+
+      {% if user.rule == 2 %}
+      <td>Модератор</td>
+      {% endif %}
+
+      {% if user.rule == 3 %}
+      <td>Участник</td>
+      {% endif %}
+
+      {% if user.rule == 4 %}
+      <td>Бесплатный доступ</td>
+      {% endif %}
+
+      {% if user.rule == 5 %}
+      <td>Зарегистрированный</td>
+      {% endif %}
+
+      {% if user.block == 0 %}
+      <td>Нет</td>
+      {% else %}
+      <td>Да</td>
+      {% endif %}
+    <td>
+       <form class="user" action="/backoffice/userlist/{{user.id}}" method="GET">
+          <button class="btn btn-outline-primary" type="submit">Редактирование</button>
+          </form>
+      </td>  
+    </tr>
+     
+  </tbody>
+
+{% endfor %}
+
+                                </table>
+                            </div>
+                        
+
+{% endblock %}

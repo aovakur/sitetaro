@@ -1,0 +1,31 @@
+
+
+
+{% extends 'index.html' %}
+
+{% block content %}
+<form action="/reset" method="POST">
+            <div class="text-center mt-4">
+              <h1 class="h2">{{title}}</h1>
+            </div>
+
+            <div class="card">
+              <div class="card-body">
+              
+               
+                    <div class="form-floating">
+                       <label for="floatingInput">Укажите свою почту</label>
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+     
+                   </div>
+
+                   <div class="checkbox mb-3">   </div>
+            
+               <button type="submit" class="btn btn-lg btn-primary">Сбросить пароль</button> 
+            
+              </div>
+            </div>
+
+ </form>   
+
+{% endblock %}

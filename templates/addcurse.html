@@ -1,0 +1,68 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+
+<script type="text/javascript">
+var a = {"Ё":"YO","Й":"I","Ц":"TS","У":"U","К":"K","Е":"E","Н":"N","Г":"G","Ш":"SH","Щ":"SCH","З":"Z","Х":"H","Ъ":"'","ё":"yo","й":"i","ц":"ts","у":"u","к":"k","е":"e","н":"n","г":"g","ш":"sh","щ":"sch","з":"z","х":"h","ъ":"'","Ф":"F","Ы":"I","В":"V","А":"А","П":"P","Р":"R","О":"O","Л":"L","Д":"D","Ж":"ZH","Э":"E","ф":"f","ы":"i","в":"v","а":"a","п":"p","р":"r","о":"o","л":"l","д":"d","ж":"zh","э":"e","Я":"Ya","Ч":"CH","С":"S","М":"M","И":"I","Т":"T","Ь":"'","Б":"B","Ю":"YU","я":"ya","ч":"ch","с":"s","м":"m","и":"i","т":"t","ь":"'","б":"b","ю":"yu"};
+
+function transliterate(word){
+  return word.split('').map(function (char) {
+    return a[char] || char;
+  }).join("");
+}
+
+function getenglish_world()
+{
+var world = document.getElementById('curs').value
+var newworld = transliterate(world)
+
+newworld = newworld.replace(/\s/g, '_');
+var input = document.getElementById('url');
+input.value = newworld;
+
+}
+
+</script>
+
+<div class="table-responsive">
+          <form class="user" action="/backoffice/addcurse" method="POST">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Добавить новый курс</label>
+              <input class="form-control" type="text" id="curs" placeholder="Напишите имя нового курса" aria-label="Напишите имя нового курса" name="name" onchange="getenglish_world()">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Ссылка на английском (на английском)</label>
+              <input class="form-control" id=url type="text" placeholder="Напишите короткое имя на английском" aria-label="Напишите короткое имя на английском" name="url" readonly>
+            </div>
+        
+
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Автор</label>
+              <input class="form-control" type="text" placeholder="Автор курса" aria-label="Автор курса" name="author" value="{{user}}" readonly>
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Картинка</label>
+              <input class="form-control" type="text" placeholder="Картинка курса" aria-label="Картинка курса" name="picture">
+            </div>
+
+             <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Стоимость</label>
+              <input class="form-control" type="text" placeholder="Стоимость курса" aria-label="Стоимость курса" name="cost">
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Описание курса</label>
+              <textarea id="myTextarea" name="description" ></textarea>
+
+            </div>
+              
+            
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button class="btn btn-primary" type="submit">Добавить курс</button>
+          </div>
+        </form>
+      </div>
+ 
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+
+
+{% extends 'index.html' %}
+
+{% block content %}
+		<table >
+		<tbody>
+		<tr>
+		<td></td>
+		<td></td>
+		{% if data == 1 %}
+		<td><p><a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card0.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		{% if data == 1 %}
+		<td><p><a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card1.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		</tr>
+
+		<tr>
+		<td></td>
+		{% if data == 1 %}
+		<td><p><a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card3.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		<td></td>
+		{% if data == 1 %}
+		<td><p><a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card4.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+
+			<tr>
+		<td></td>
+		{% if data == 1 %}
+		<td><p><a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card5.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		<td></td>
+		{% if data == 1 %}
+		<td><p><a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card6.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+
+		<tr>
+			{% if data == 1 %}
+		<td><p><a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture2" src="{{context.card2.img}}"></a></p></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		</tr>
+		</table>
+		</tbody>
+
+<form class="user" action="{{face}}" method="POST">
+<button class="btn btn-lg btn-primary btn-block" type="submit">Сгенерировать расклад</button>
+</form>
+{% if data == 1 %}		
+<p>1 - Как воспринимаю сам себя (самооценка)</p>
+<p><a target="_blank" href="/taro/{{context.card0.eng}}"> <img class="fit-picture2" src="{{context.card0.img}}"></a><p>
+<p>2 - Что для меня важно на данный момент (мои цели, ценности, приоритеты)</p>
+<p><a target="_blank" href="/taro/{{context.card1.eng}}"> <img class="fit-picture2" src="{{context.card1.img}}"></a><p>
+<p>3 - Теневая сторона личности (то, что я отвергаю)</p>
+<p><a target="_blank" href="/taro/{{context.card2.eng}}"> <img class="fit-picture2" src="{{context.card2.img}}"></a><p>
+<p>4 - Что я считаю своим преимуществом</p>
+<p><a target="_blank" href="/taro/{{context.card3.eng}}"> <img class="fit-picture2" src="{{context.card3.img}}"></a><p>
+<p>5 - Что я считаю своим недостатком</p>
+<p><a target="_blank" href="/taro/{{context.card4.eng}}"> <img class="fit-picture2" src="{{context.card4.img}}"></a><p>
+<p>6 - Что мне помогает (мои ресурсы)</p>
+<p><a target="_blank" href="/taro/{{context.card5.eng}}"> <img class="fit-picture2" src="{{context.card5.img}}"></a><p>
+<p>7 - Что мне мешает (внутренние барьеры, комплексы, установки)</p>
+<p><a target="_blank" href="/taro/{{context.card6.eng}}"> <img class="fit-picture2" src="{{context.card6.img}}"></a><p>
+{%endif%}
+{% endblock %}

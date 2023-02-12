@@ -1,0 +1,38 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+<div class="table-responsive">
+          <form class="user" action="/backoffice/addcurse" method="POST">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Добавить новый курс</label>
+              <input class="form-control" type="text" placeholder="Напишите имя нового курса" aria-label="Напишите имя нового курса" name="name">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Ссылка на английском (на английском)</label>
+              <input class="form-control" type="text" placeholder="Напишите короткое имя на английском" aria-label="Напишите короткое имя на английском" name="url" >
+            </div>
+        
+
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Автор</label>
+              <input class="form-control" type="text" placeholder="Автор курса" aria-label="Автор курса" name="author" value="{{user}}" readonly>
+            </div>
+
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Картинка</label>
+              <input class="form-control" type="text" placeholder="Картинка курса" aria-label="Картинка курса" name="picture">
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlTextarea1" class="form-label">Описание курсы</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="description"></textarea>
+            </div>
+              
+            
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button class="btn btn-primary" type="submit">Добавить курс</button>
+          </div>
+        </form>
+      </div>
+ 
+</div>
+{% endblock %}

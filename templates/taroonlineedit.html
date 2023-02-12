@@ -1,0 +1,143 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+<select class="form-control select2" onchange="if (this.value) window.location.href = this.value">
+  <option value="">Выберите карту</option>
+{% for card in data %}
+             <option value="/backoffice/taroedit/{{card.id}}">{{card.carta}}</option> 
+{% endfor %}
+</select>
+<script>
+    $('.select2').select2();
+</script>
+</br>
+<p></p>
+
+{% if data2 %}
+<img class="fit-picture" src="{{data2.img}}"></a>
+
+<form class="user" action="/backoffice/taroedit/{{data2.id}}" method="POST">
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">ID</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.id}}" name="id" readonly>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Карта</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.carta}}" name="carta" readonly>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Полное имя карты</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.name_carta}}" name="name_carta">
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Альтернативное название</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.name2_carta}}" name="name2_carta">
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">На английском</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.eng}}" name="eng" readonly>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Тип карты</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.type_carta}}" name="type_carta" readonly>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Тип карты (на английском)</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.type_carta_eng}}" name="type_carta_eng" readonly>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Картинка</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.img}}" name="img">
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Графический символ</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.graph_simphol}}" name="graph_simphol">
+  </div>
+  
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Зодиак</label>
+  <input type="text" class="form-control" placeholder="Default input" value="{{data2.zodiak}}" name="zodiak">
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Описание Карты </label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="description_cart">{{data2.description_cart}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Общее значение карты</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="general_carta">{{data2.general_carta}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Психологическая характеристика личности</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="psih_har">{{data2.psih_har}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Сочетание со Старшими Арканами</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="starhie_arkan">{{data2.starhie_arkan}}</textarea>
+  </div>
+
+   <div class="mb-3">
+  <label for="exampleFormControlInput1">Сочетание с Мечами</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="mechi">{{data2.mechi}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Сочетание с Пентаклями</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="pentakl">{{data2.pentakl}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Сочетание с Жезлами</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="zhezl">{{data2.zhezl}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Сочетание с Кубками</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="kubki">{{data2.kubki}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Бизнес (Прямое положение)</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="busnes1">{{data2.busnes1}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Бизнес (Перевернутое положение)</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="busnes2">{{data2.busnes2}}</textarea>
+  </div>
+
+  <div class="mb-3">
+  <label for="exampleFormControlInput1">Любовь (Прямое положение)</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="love1">{{data2.love1}}</textarea>
+  </div>
+
+   <div class="mb-3">
+  <label for="exampleFormControlInput1">Любовь (Перевернутое положение)</label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="love2">{{data2.love2}}</textarea>
+  </div>
+
+   <div class="mb-3">
+  <label for="exampleFormControlInput1">Да / Нет </label>
+   <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" cols="33" name="yesno">{{data2.yesno}}</textarea>
+  </div>
+
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <button class="btn btn-primary" type="submit">Обновить информацию</button>
+          </div>
+</form>
+
+{% endif %}
+
+{% endblock %}

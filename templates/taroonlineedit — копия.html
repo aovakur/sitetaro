@@ -1,0 +1,57 @@
+
+{% extends "layout_lk.html" %}
+
+{% block content %}
+<form class="user" action="/backoffice/taroedit" method="POST">
+               
+<table class="table" id="dataTable" width="2800px" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Карта</th>
+                                            <th>url</th>
+                                            <th>Тип карты</th>
+                                            <th>Имя карты</th>
+                                            <th>Другое имя карты</th>
+                                            <th>Картинка</th>
+                                            <th>Графическое обозначение</th>
+                                            <th>Описание карты</th>
+                                            <th>Общее описание карты</th>
+                                            <th>Психологическая характеристика личности</th>
+                                            <th>Зодиак (планета)</th>
+                                            <th>Сочетание со старшими Арканами</th>
+                                            <th>Сочетание с мечами</th>
+                                            <th>Сочетание с пентаклями</th>
+                                            <th>Сочетание с жезлами</th>
+                                            <th>Сочетание с кубками</th>
+                                        </tr>
+                                    </thead>
+
+                                 
+{% for card in data %}
+<tbody>
+    <tr>
+      <td>{{card.id}}</td>
+      <td>{{card.carta}}</td>
+      <td>{{card.eng}}</td>
+      <td>{{card.type_carta}}</td>
+      <td>{{card.name_carta}}</td>
+      <td>{{card.name2_carta}}</td>
+      <td><img class="fit-picture" src="{{card.img}}"></td>
+      <td><p>Графическое обозначкение</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.graph_simphol}}</textarea></td>
+      <td><p>Описание карты</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.description_cart}}</textarea></td>
+      <td><p>Общее описание карты</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.general_carta}}</textarea></td>
+      <td><p>Психологическая характеристика</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.psih_har}}</textarea></td>
+      <td><p>Зодиак (планета)</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.zodiak}}</textarea></td>
+    <td><p>Сочетание со старшими Арканами</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.starhie_arkan}}</textarea></td>
+    <td><p>Сочетание с мечами</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.mechi}}</textarea></td>
+    <td><p>Сочетание с пентаклями</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.pentakl}}</textarea></td>
+    <td><p>Сочетание с жезлами</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.zhezl}}</textarea></td>    
+    <td><p>Сочетание с кубками</p><textarea class="form-control" id="exampleFormControlTextarea1" rows="3" width="100px" name="{{card.id}}_graph_simphol" style="height: 178px;width: 300px;">{{card.kubki}}</textarea></td>     
+    </tr>
+</tbody>
+
+{% endfor %}
+</table>
+{% endblock %}
+

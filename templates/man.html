@@ -1,0 +1,92 @@
+
+{% extends 'index.html' %}
+
+{% block content %}
+
+<h1>Что за человек?</h1>
+<div id="general1">
+		<table >
+		<tbody>
+		<tr>
+		 {% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card3.eng}}"> <img class="fit-picture2" src="{{context.card3.img}}"><a></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+		<tr>
+		{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card6.eng}}"> <img class="fit-picture2" src="{{context.card1.img}}"><a></td>
+		{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+		</table>
+		</tbody>
+		</div>
+		<div id="general">
+		<table >
+		<tbody>
+		<tr>
+			{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card0.eng}}"> <img class="fit-picture2" src="{{context.card0.img}}"><a></td>
+		 {% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+		<tr>
+			{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card6.eng}}"> <img class="fit-picture2" src="{{context.card6.img}}"><a></td>
+		 {% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+		<tr>
+			{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card5.eng}}"> <img class="fit-picture2" src="{{context.card5.img}}"><a></td>
+		 {% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+		</tbody>
+		</table>
+		</div>
+		<div id="general1">
+		<table >
+		<tbody>
+		<tr>
+		{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card4.eng}}"> <img class="fit-picture2" src="{{context.card4.img}}"><a></td>
+		 {% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+		<tr>
+			{% if data == 1 %}
+		<td><a target="_blank" href="/taro/{{context.card2.eng}}"> <img class="fit-picture2" src="{{context.card2.img}}"><a></td>
+		 {% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		{% endif %}
+		</tr>
+		</tbody>
+		</table>
+		</div>
+
+<form action="{{man}}" method="POST">
+<button class="btn btn-lg btn-primary btn-block" type="submit">Сгенерировать расклад</button>
+</form>
+
+ {% if data == 1 %}
+<p>Внешнее</p>
+<p><a target="_blank" href="/taro/{{context.card3.eng}}"><img class="fit-picture2" src="{{context.card0.img}}"></a></p>
+<p><a target="_blank" href="/taro/{{context.card3.eng}}"><img class="fit-picture2" src="{{context.card1.img}}"></a></p>
+<p><a target="_blank" href="/taro/{{context.card3.eng}}"><img class="fit-picture2" src="{{context.card2.img}}"></a></p>
+
+<p>Скрутое, внутренее</p>
+<p><a target="_blank" href="/taro/{{context.card3.eng}}"><img class="fit-picture2" src="{{context.card3.img}}"></a></p>
+<p><a target="_blank" href="/taro/{{context.card3.eng}}"><img class="fit-picture2" src="{{context.card4.img}}"></a></p>
+<p><a target="_blank" href="/taro/{{context.card3.eng}}"><img class="fit-picture2" src="{{context.card5.img}}"></a></p>
+<p>Сокровенное</p>
+<p><a target="_blank" href="/taro/{{context.card3.eng}}"><img class="fit-picture2" src="{{context.card6.img}}"></a></p>
+ {% endif %}
+{% endblock %}

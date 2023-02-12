@@ -1,0 +1,120 @@
+
+{% extends 'index.html' %}
+
+{% block content %}
+        
+
+<p></p>
+{% if curs !=1 %}
+<div class="btnshare">
+<script src="https://yastatic.net/share2/share.js"></script>
+<div class="ya-share2" data-curtain data-shape="round" data-services="messenger,vkontakte,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,pinterest"></div>
+</div>
+{% endif %}
+<h3>Название карты: {{data.name_carta}}</h3> 
+
+<table>
+    <tr>
+    <td><img class="fit-picture" src="{{data.img}}" ></td>
+    <td>
+        
+    <div class="text">  
+    
+        <p><b>Другие названия карты:</b> {{data.name2_carta}}</p>  
+        <p><b>Обозначение: </b>{{data.graph_simphol}}</p>
+        {% if data.type_carta=="Старший Аркан" %}
+        <p><b>Аркан: {{data.type_carta}}</p>
+        {% else %}
+         <p><b>Аркан: Младший Аркан </b>({{data.type_carta}})</p>
+        {% endif %}
+    </div>
+
+    </td>
+    </tr>
+</table>
+
+<h3>Описание Карты </h3>
+<p>{{data.description_cart}}</p>
+<h3>Общее значение карты:</h3>
+<p>{{data.general_carta}}</p>
+<h3>Психологическая характеристика личности</h3>
+<p>{{data.psih_har}}</p>
+<h3>Зодиак (планета):</h3>
+<p>{{data.zodiak}}</p>
+
+{% if curs == 1%}
+<h3>Бизнес</h3>
+<p><b>Прямое положение</b> - {{data.busnes1}} </p>
+<p><b>Перевернутое положение</b> - {{data.busnes2}}</p>
+<h3>Любовь</h3>
+<p><b>Прямое положение </b> - {{data.love1}}</p>
+<p><b>Перевернутое положение</b> - {{data.love2}}</p>
+{% endif %}
+
+{% if array[0] != [''] or array[1] != [''] or array[2] != [''] or array[3] != [''] or array[4] != ['']  %}
+<h3> Сочетание </h3>
+{% endif %}
+
+{% if array[0] != [''] %}
+<p><b>{{data.carta}} со Старшими Арканами</b></p>
+{% for data in array[0] %}
+{% if data != '' %}
++ {{data}} </br>
+{% endif %}
+{% endfor %}
+</br>
+{% endif %} 
+
+{% if array[1] != [''] %}
+<p><b>{{data.carta}} с Мечами</b></p>
+{% for data in array[1] %}
+{% if data != '' %}
++ {{data}} </br>
+{% endif %}
+{% endfor %}
+{% endif %} 
+
+{% if array[2]  != ['']  %}
+<p><b> {{data.carta}} с Пентаклями</b></p>
+{% for data in array[2] %}
+{% if data != '' %}
++ {{data}} </br>
+{% endif %}
+{% endfor %}
+{% endif %} 
+
+{% if array[3] != ['']  %}
+<p> <b>{{data.carta}} с Жезлами</b></p>
+{% for data in array[3]  %}
+{% if data != '' %}
++ {{data}} </br>
+{% endif %}
+{% endfor %}
+{% endif %} 
+
+
+{% if array[4] != ['']  %}
+<p><b> {{data.carta}} с Кубками</b></p>
+{% for data in array[4] %}
+{% if data != '' %}
++ {{data}} </br>
+{% endif %}
+{% endfor %}
+{% endif %} 
+
+
+
+<h2>Все карты {{data.type_carta}} </h2> 
+ <div class="row">
+{% for card in data2 %}
+{% if card.type_carta_eng == data.type_carta_eng and card.id != data.id %}
+    <div class="col-7 col-md-4">
+      <a target="_blank" href="{{url}}{{card.type_carta_eng}}/{{card.eng}}"><img class="fit-picture2" src="{{card.img}}"></a>
+            <h3><a href="{{url}}{{card.type_carta_eng}}/{{card.eng}}">{{card.carta}}</a></h3> 
+    </div>
+{% endif %}  
+{% endfor %}
+ </div>   
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Урок</th>
+                                            <th>Имя</th>
+                                            <th>Описание</th>
+                                            <th>Создан</th>
+                                            <th>Удалить урок</th>
+                                            <th>Посмотреть урок</th>
+                                            <th>Редактирование урока</th>
+                                        </tr>
+                                    </thead>
+
+
+
+<tbody>
+    {% for data in lessons %}
+    <tr>
+      <td><b>{{data.lesson}}</b></td>
+      <td><b>{{data.name}}</b></td>
+      <td><b>{{data.description}}</b></td>
+      <td>{{data.created_on}}</td>
+      <td>
+          
+          <form class="user" action="/backoffice/curses/{{data.curse}}/{{data.lesson}}/del=true" method="POST">
+          <button class="btn btn-outline-danger" type="submit">Удалить</button>
+          </form>
+      </td>
+
+      <td>
+          
+          <form class="user" action="/backoffice/curses/view/curs={{data.curse}}&lesson={{data.lesson}}" method="POST">
+          <button class="btn btn-outline-info" type="submit">Посмотреть урок</button>
+          </form>
+      </td>
+
+      <td>
+          
+          <form class="user" action="/backoffice/curses/edit/curs={{data.curse}}&lesson={{data.lesson}}" method="GET">
+          <button class="btn btn-outline-primary" type="submit">Редактировать урок</button>
+          </form>
+      </td>
+
+    </tr>
+
+{% endfor %}
+
+</tbody>
+</table>
+
+<form class="user" action="/backoffice/curses/addlesson/curs={{curse}}" method="GET">
+<button class="btn btn-primary btn-right" type="submit">Добавить новый урок</button>
+</form>
+                            </div>
+                        
+
+{% endblock %}

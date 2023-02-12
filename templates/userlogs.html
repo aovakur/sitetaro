@@ -1,0 +1,28 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>№</th>
+                                            <th>Имя</th>
+                                        </tr>
+                                    </thead>
+
+
+{% for user in data %}
+<tbody>
+    <tr>
+      <td>{{user.id}}</td>
+      <td></td>
+    </tr>
+</tbody>
+
+{% endfor %}
+
+                                </table>
+                            </div>
+                        
+
+{% endblock %}

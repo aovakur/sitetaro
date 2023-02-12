@@ -1,0 +1,96 @@
+{% extends 'layout_lk.html' %}
+
+{% block content %}
+<div class="table-responsive">  
+  {% if all=="1"%}
+  <h2>Карты Таро: Значение и толкование</h2>
+  {% else %}
+  {% endif %}
+  
+  <p></p>
+  {% if all=="1" or category =="starshui-arkan" %}
+  	<h1><a href="{{url}}starshui-arkan">Старший Аркан</a></h1>
+  	{% endif %}
+  <div class="row">
+  	{% for card in data %}
+  	{% if card.type_carta == "Старший Аркан" %}
+    <div class="col-4 col-md-2">
+      <a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}"><img class="fit-picture" src="{{card.img}}"></a>
+           	<h3><a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}">{{card.carta}}</a></h3>
+			<p>{{card.graph_simphol}}</p>
+    </div>
+      {% endif %}  
+        {% endfor %}
+  </div>
+   
+  
+  	{% if all=="1" or category =="mechi" or category =="pentakli" or category=="zhezly" or category=="kubki" or category =="mladshie-arkany"%}
+    <h1><a  href="{{url}}mladshie-arkany">Младшие арканы</a></h1>
+    {% endif %}
+
+
+    {% if all=="1" or category =="mechi" or category =="mladshie-arkany" %}
+	<h2><a  href="{{url}}mechi">Мечи</a></h1>
+	{% endif %}
+
+   <div class="row">
+  	{% for card in data %}
+		{% if card.type_carta == "Мечи" %}
+    <div class="col-4 col-md-2">
+      <a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}"><img class="fit-picture" src="{{card.img}}"></a>
+           	<h3><a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}">{{card.carta}}</a></h3>
+			<p>{{card.graph_simphol}}</p>
+    </div>
+      {% endif %}  
+        {% endfor %}
+  </div>
+
+
+  {% if all=="1" or category =="pentakli" or category =="mladshie-arkany"%}
+  <h2><a  href="{{url}}pentakli">Пентакли</a></h1>
+  <div class="row">
+  	{% for card in data %}
+		{% if card.type_carta == "Пентакли"%}
+    <div class="col-4 col-md-2">
+      <a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}"><img class="fit-picture" src="{{card.img}}"></a>
+           	<h3><a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}">{{card.carta}}</a></h3>
+			<p>{{card.graph_simphol}}</p>
+    </div>
+      {% endif %}  
+        {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if all=="1" or category=="zhezly" or category =="mladshie-arkany"%}
+  <h2><a  href="{{url}}zhezly">Жезлы</a></h1>
+  <div class="row">
+  	{% for card in data %}
+		{% if card.type_carta == "Жезлы"%}
+    <div class="col-4 col-md-2">
+      <a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}"><img class="fit-picture" src="{{card.img}}"></a>
+           	<h3><a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}">{{card.carta}}</a></h3>
+			<p>{{card.graph_simphol}}</p>
+    </div>
+      {% endif %}  
+        {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if all=="1" or category=="kubki" or category =="mladshie-arkany" %}
+  <h2><a  href="{{url}}kubki">Кубки</a></h1>
+  <div class="row">
+
+  	{% for card in data %}
+		{% if card.type_carta == "Кубки" %}
+    <div class="col-4 col-md-2">
+      <a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}"><img class="fit-picture" src="{{card.img}}"></a>
+           	<h3><a  href="{{url}}{{card.type_carta_eng}}/{{card.eng}}">{{card.carta}}</a></h3>
+			<p>{{card.graph_simphol}}</p>
+    </div>
+      {% endif %}  
+        {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}

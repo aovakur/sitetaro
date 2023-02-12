@@ -1,0 +1,62 @@
+
+
+{% extends 'index.html' %}
+
+{% block content %}
+	<h1>Расклад да/нет</h1>
+	{% if data == 1 %}
+	<a target="_blank" href="/taro/{{context.card1.eng}}"><img class="fit-picture2" src="{{context.card1.img}}"></a>
+	<a target="_blank" href="/taro/{{context.card0.eng}}"><img class="fit-picture_base" src="{{context.card0.img}}"></a>
+	<a target="_blank" href="/taro/{{context.card2.eng}}"><img class="fit-picture2" src="{{context.card2.img}}"></a>
+	{% else %}
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+		<td><img class="fit-picture2" src="{{rubashka}}"></td>
+	{% endif %}
+<p>
+</p>
+<form class="user" action="{{yesno}}" method="POST">
+<button class="btn btn-lg btn-primary btn-block" type="submit">Сгенерировать расклад</button>
+</form>
+
+{% if data == 1 %}
+	<h1>Расшифровка</h1>
+			<h2>Ваша карта</h2>
+			<div class = "decoding_img">	
+				<a target="_blank" href="/taro/{{context.card0.eng}}">
+				<img class="fit-picture_base" src="{{context.card0.img}}" ></a>
+			</div>
+
+			<div class = "decoding_text">
+				<p>{{context.card0.carta}}</p>
+				<p>Значение: {{context.card0.graph_simphol}}</p>
+				<p>Ответ по карте: {{context.card0.yesno}}</p>
+			</div>
+
+			<div class = "decoding_img">
+				
+				<a target="_blank" href="/taro/{{context.card1.eng}}">
+				<img class="fit-picture2" src="{{context.card1.img}}" >
+			</a>
+			</div>
+
+			<div class = "decoding_text">
+				<p>{{context.card1.carta}}</p>
+				<p>Значение: {{context.card1.graph_simphol}}</p>
+				<p>Ответ по карте: {{context.card1.yesno}}</p>
+			</div>
+
+			<h2>Дополнительные карта </h2>
+			<div class = "decoding_img">
+				<a target="_blank" href="/taro/{{context.card2.eng}}">
+				<img class="fit-picture2" src="{{context.card2.img}}" >
+				</a>
+			</div>
+			<div class = "decoding_text">
+					<p>{{context.card2.carta}}</p>
+					<p>Значение: {{context.card2.graph_simphol}}</p>
+					<p>Ответ по карте: {{context.card2.yesno}}</p>
+			</div>
+
+{% endif %}
+{% endblock %}

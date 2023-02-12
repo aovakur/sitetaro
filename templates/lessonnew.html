@@ -1,0 +1,49 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+
+
+<p>
+
+<form class="user" action="/backoffice/curses/edit/curs={{curses_id}}&lesson=0" method="POST">
+
+<table>
+
+    <tr>
+    <td><b>Номер курса</b></td>
+    <td><b><input class="form-control_lesson" type="text" placeholder="Default input" value="{{curses_id}}" name="curse" readonly></b></td>
+    <tr>
+
+    <tr>
+    <td><b>Урок</b></td>
+    {% if count_lesson %}
+    <td><b><input class="form-control_lesson" type="text" placeholder="Default input" value="{{count_lesson}}" name="lesson" readonly></b></td>
+    {% endif %}
+    </tr>
+
+    <tr>
+    <td><b>Наименование урока</b></td>
+    <td><input class="form-control_lesson" type="text" placeholder="Default input" value="" name="name"> </td>
+    <tr>
+
+    <tr>
+    <td><b>Описание урока</b></td>
+    <td><textarea class="form-control_lesson2" id="exampleFormControlTextarea1" rows="3" name="description"></textarea></td>
+    <tr>
+
+
+</table>
+<b>Содержание урока</b>   
+
+<textarea id="myTextarea" name="data" ></textarea>
+
+<b>Домашнее задание</b>  
+<textarea id="myTextarea2" name="homework"></textarea>
+
+</br>
+ <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<button class="btn btn-primary" type="submit">Сохранить запись</button>
+</div>
+</form>
+
+{% endblock %}
