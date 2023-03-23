@@ -25,8 +25,8 @@ import asyncio
 
 app = Flask(__name__)
 
-'''engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")'''
-engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")
+engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")
+'''engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")'''
 session = Session(bind=engine)
 Base = declarative_base()
 
@@ -1386,8 +1386,8 @@ if __name__ == "__main__":
     Settings.getglobalsettings()
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    '''app.run(host='0.0.0.0',port=80,debug=False)'''
-    app.run(host='0.0.0.0',port=80,debug=True)
+    app.run(host='0.0.0.0',port=80,debug=False)
+    '''app.run(host='0.0.0.0',port=80,debug=True)'''
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
