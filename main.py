@@ -486,10 +486,10 @@ def userlist_user(user_id):
 
 @app.route('/backoffice/userlist')
 @authorization_verification
-async def userlist():
+def userlist():
     try:
         title ="Список пользователь"
-        await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+        logger_info.logger(request.method,request.base_url, userprofile.first_name)
         users_list = session.query(Users).order_by(Users.id.desc()).all()
     finally:
         return render_template('userlist.html',data = users_list, header=header, title = title, rule=userprofile.rule)
@@ -498,25 +498,24 @@ async def userlist():
 @app.route('/backoffice/userlogs')
 @app.route('/backoffice/userlogs?page=<int:page_num>')
 @authorization_verification
-async def userlogs():
+def userlogs():
     try: 
-        await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+        logger_info.logger(request.method,request.base_url, userprofile.first_name)
     finally: 
         return render_template('userlogs.html', header=header, rule=userprofile.rule)
 
 @app.route('/backoffice/')
 @app.route('/backoffice')
 @authorization_verification
-async def backoffice():
-    try: 
-        await logger_info.logger(request.method,request.base_url,userprofile.email)
-    finally: 
+def backoffice():
+        logger_info.logger(request.method,request.base_url,userprofile.email) 
         return render_template('layout_lk.html', header=header, rule=userprofile.rule)    
+
 
 @app.route('/backoffice/curses/')
 @app.route('/backoffice/curses')
 @authorization_verification
-async def curses():
+def curses():
     try: 
         error_curs = 0 
         if (userprofile.cursdelerrorcount == 0): 
@@ -526,7 +525,7 @@ async def curses():
         title="Список курсов"
 
         try: 
-            await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+            logger_info.logger(request.method,request.base_url, userprofile.first_name)
             context = session.query(Curses).all()
         except: 
             session.rollback()
@@ -535,7 +534,7 @@ async def curses():
 
 @app.route('/backoffice/curses/<int:curses_id>/del=<string:delit>', methods=['GET', 'POST'])
 @authorization_verification
-async def cursesdel(curses_id,delit):
+def cursesdel(curses_id,delit):
     try:
          if request.method == "POST":
             if (delit == "true"):
@@ -545,7 +544,7 @@ async def cursesdel(curses_id,delit):
                         session.query(Curses).filter(Curses.curses_id == curses_id).delete()
                         session.commit()
                         transaction.commit()
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
+                        logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
                         userprofile.cursdelerror = 0
 
                     except Exception:
@@ -636,10 +635,10 @@ def addcurse():
 @app.route('/backoffice/curses/<int:curses_id>', methods=['GET', 'POST'])
 @app.route('/backoffice/curses/<int:curses_id>', methods=['GET', 'POST'])
 @authorization_verification
-async def lessons(curses_id):
+def lessons(curses_id):
     try:
         title = "Курс " + str(curses_id)
-        await logger_info.logger(request.method,request.base_url, userprofile.email)
+        logger_info.logger(request.method,request.base_url, userprofile.email)
         lessons = session.query(Lessons.curse,Lessons.name,Lessons.description,Lessons.lesson,Lessons.created_on).filter(Lessons.curse == curses_id).all()
     finally:
         return render_template('lessons.html', lessons = lessons, curse = curses_id, title = title, header=header)
@@ -667,7 +666,7 @@ def lessondel(curses_id,lesson_id,delit):
 
 @app.route('/backoffice/curses/edit=<int:curse_id>', methods=['GET', 'POST'])
 @authorization_verification      
-async def cursedit(curse_id):
+def cursedit(curse_id):
     try: 
         if request.method =='POST':
             curses_id = request.form['curses_id']
@@ -691,7 +690,7 @@ async def cursedit(curse_id):
 
             return redirect("/backoffice/curses/edit={curse_id}")
         else: 
-            await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+            logger_info.logger(request.method,request.base_url, userprofile.first_name)
             context = session.query(Curses).filter(Curses.curses_id == curse_id).first()
             data =  context.description
             return render_template('curseedit.html', context = context, user = userprofile.email, data = data, title = "Курс" + str(curse_id), header = header)
@@ -701,14 +700,14 @@ async def cursedit(curse_id):
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>/', methods=['GET', 'POST'])
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>', methods=['GET', 'POST'])
 @authorization_verification
-async def lessonedit(curses_id,lesson_id):
+def lessonedit(curses_id,lesson_id):
     try:
         if (int(lesson_id) > 0):
             if request.method == 'GET':
                 lesson = session.query(Lessons).filter((Lessons.curse == curses_id) & (Lessons.lesson == lesson_id)).first()
                 data = lesson.data
                 homework = lesson.homework
-                await logger_info.logger(request.method,request.base_url, userprofile.email)
+                logger_info.logger(request.method,request.base_url, userprofile.email)
                 return render_template('lessonedit.html', lesson = lesson, data = data, homework = homework)
 
             if request.method == 'POST':
@@ -750,10 +749,10 @@ async def lessonedit(curses_id,lesson_id):
                         session.add(Lessons(curse=curse, name= name,description=description,lesson=lesson,homework=homework,data=data))
                         session.commit()
                         transaction.commit() 
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
+                        logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
                     except Exception as E:
                         transaction.rollback()
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, E)
+                        logger_info.logger(request.method,request.base_url, userprofile.email, E)
                     
                 lesson = session.query(Lessons).filter((Lessons.curse == curse) & (Lessons.lesson == lesson)).first()
                 data = lesson.data
@@ -765,10 +764,10 @@ async def lessonedit(curses_id,lesson_id):
 
 @app.route('/backoffice/curses/view/curs=<int:curses_id>&lesson=<int:lesson_id>', methods=['GET', 'POST'])
 @authorization_verification
-async def lessonview(curses_id,lesson_id):
+def lessonview(curses_id,lesson_id):
     try: 
         title = "Урок " + str(lesson_id) + " Курс" + str(curses_id)
-        await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+        logger_info.logger(request.method,request.base_url, userprofile.first_name)
         lessondata = session.query(Lessons).filter(and_(Lessons.curse  == curses_id, Lessons.lesson == lesson_id)).first()
         data = Markup(lessondata.data)
         homework = Markup(lessondata.homework)
@@ -778,7 +777,7 @@ async def lessonview(curses_id,lesson_id):
 
 @app.route('/backoffice/settings', methods=['GET', 'POST'])
 @authorization_verification
-async def setting():
+def setting():
     try: 
         title = "Настройка сайта"
         session_data = session.query(Settings_site).filter(Settings_site.id == '1').first()
@@ -803,10 +802,10 @@ async def setting():
                             x.meta_tag = meta_tag1
                             session.commit()
                             transaction.commit() 
-                            await logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
+                            logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
                         except Exception as E:
                             transaction.rollback()
-                            await logger_info.logger(request.method,request.base_url, userprofile.email, E)
+                            logger_info.logger(request.method,request.base_url, userprofile.email, E)
                 return redirect(url_for('setting'))
             except: 
                 return render_template('setting.html', title= title, header=header)
@@ -819,9 +818,9 @@ async def setting():
 
 @app.route('/backoffice/taroedit/<int:card_id>', methods=['GET', 'POST'])
 @authorization_verification
-async def taroonlineeditcard(card_id=1):
+def taroonlineeditcard(card_id=1):
     try:
-        await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+        logger_info.logger(request.method,request.base_url, userprofile.first_name)
         if request.method == 'POST':
             id = request.form['id']
             carta = request.form['carta']
@@ -873,10 +872,10 @@ async def taroonlineeditcard(card_id=1):
                             x.yesno=yesno
                             session.commit()
                             transaction.commit() 
-                            await logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
+                            logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
                         except Exception as E:
                             transaction.rollback()
-                            await logger_info.logger(request.method,request.base_url, userprofile.email, E)
+                            logger_info.logger(request.method,request.base_url, userprofile.email, E)
 
             return redirect("/backoffice/taroedit/{card_id}")
            
@@ -950,7 +949,7 @@ async def login_auth():
                 global logger_info
                 logger_info = Logger_info()
                 ses['log_in'] = True
-                await logger_info.logger(request.method,request.base_url, userprofile.email)
+                logger_info.logger(request.method,request.base_url, userprofile.email)
                 return redirect(url_for('backoffice'))
                 
             else:
