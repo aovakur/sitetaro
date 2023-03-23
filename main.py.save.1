@@ -1,7 +1,8 @@
-# -*- coding: utf8 -*-
-# coding: utf8
-# coding=utf8
 
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from flask import Flask, url_for
 from sqlalchemy import create_engine, MetaData, Table, Integer, String, Column, DateTime, ForeignKey, Numeric, SmallInteger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -21,11 +22,12 @@ from functools import wraps
 from flask_paginate import *
 import socket
 from requests import get
-import asyncio
+
+
 
 app = Flask(__name__)
 
-engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")
+engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro51")
 session = Session(bind=engine)
 Base = declarative_base()
 
@@ -92,6 +94,7 @@ class Users(Base):
         block = Column(Integer(), nullable=True)
         password = Column(String(100), nullable=True)
         orders = relationship("Order", backref='users')
+        
 class Order(Base):
         __tablename__ = 'orders'
         id = Column(Integer(), primary_key=True)
@@ -103,6 +106,7 @@ class Order(Base):
         payment_code = Column(String(50),nullable=True)
         payment_date = Column(DateTime(), nullable=True)
         date_expired = Column(DateTime(), nullable = True)
+        
 class Payment(Base):
        __tablename__ = 'payment'
        id = Column(Integer(), primary_key = True)
@@ -189,6 +193,7 @@ def create_db():
             email_smtp = "smtp.aovakur@yandex",
             description = "Услуги таролога",
             meta_tag = "Услуги таролога 2",)
+            
     user1 = Users(
             first_name = "Екатерина", 
             last_name = "Ферреро", 
@@ -199,6 +204,7 @@ def create_db():
             rule = 1,
             block = 0,
             password = "YUExMjM0NTY=",)
+        
     user2 = Users(
             first_name = "Андрей", 
             last_name = "Вакурин", 
@@ -210,6 +216,7 @@ def create_db():
             block = 0,
             password = "YUExMjM0NTY=",
             )
+
     curs1 = Curses(
             name = "Первый курс", 
             url = "petrov",
@@ -218,6 +225,7 @@ def create_db():
             picture = "picture",
             cost = 25000,
             )
+
     les1 = Lessons(
             curse = "1", 
             name = "petrov",
@@ -244,9 +252,9 @@ def create_db():
     createcardtaro()
 
 def createcardtaro():
-    site = "http://centr-taro-ferre.ru/static"
+    site = "http://127.0.0.1:5000/static"
     card1 = Onlinetaro(
-        carta = "Шут",
+        carta = "Шут", 
         eng = "shut",
         img = site+"/taro/1.jpg",
         type_carta = "Старший Аркан",
@@ -255,7 +263,7 @@ def createcardtaro():
         name_carta = "Шут — 0 аркан",
         name2_carta = "шут, дурак, глупец, безумец, бродяга, глупый как ребенок",
         description_cart= "Беззаботный юноша, идет по самому краю обрыва, не боясь соваться вниз в пропасть. Одежда его — разноцветная, единственный багаж — скромный узелок, привязанный к дорожному посоху. В левой руке молодой человек держит красный цветок. Он погружён в собственные грезы. Высоко на небе сияет солнце. Маленькая белая собачка у его ног лает на него, пытаясь предостеречь. Это - начало Пути нашего Героя. Собака предупреждает Героя о всех возможных опасностях. Эксцентричные одежды юноши обозначают его разнообразные противоречивые мысли, а главное его отличие от большинства людей. Маленький красный цветок, который Шут крепко сжимает в левой руке, представляет то, что скрыто в глубине сердца, - небольшой знак надежды или осознание бессмертной души. Это этап нашей жизни, когда мы бредём по пути, не разбирая дороги. Заблудился в трех соснах. И с этого пути сложно свернуть, т.к. время принимать решения уже прошло. Все в руках судьбы",
-        general_carta="Эта карта может означать беззаботность и легкость и вообще определенную незрелость и разбросанность сил. Шут дает нам возможность начать сначала в одной или неcrольких сферах жизни. Он  открыт ко всему новому, что может с ним произойти. Увеселительная поездка.Шут заставляет нас смеяться над самими собой, вновь обретая невинное и простодушное любопытство и способность удивляться. ",
+        general_carta="Эта карта может означать беззаботность и легкость и вообще определенную незрелость и разбросанность сил. Шут дает нам возможность начать сначала в одной или нескольких сферах жизни. Он  открыт ко всему новому, что может с ним произойти. Увеселительная поездка.Шут заставляет нас смеяться над самими собой, вновь обретая невинное и простодушное любопытство и способность удивляться. ",
         psih_har = "Человек легкий, беззаботный, игривый, непредсказуемый и спонтанный. Любопытный, открытый для общения. Ему везде все интересно.Люди-Шуты имеют радостное и немного безответственное отношение к жизни. Шут, попадая в жизненное пространство другого человека, может сломать ему существующую систему представлений о себе. Безответственность, хаос.",
         zodiak = "Характерен для планеты -Уран (оригинальность, эксцентричность).",
         starhie_arkan="+Жрица= уход. Несчастье, связанное с пожилой женщиной.+Императрица=уход, движение прочь, необходимость выйти из круга иллюзий.+Император= богатство уходит. И если вы поддадитесь грезам и иллюзиям сейчас -завтра пробуждение может быть горьким.+Влюбленные= неудавшееся предприятие. Все больше неуверенности и возвращение прежних иллюзий.+Жрец= бегство от ответственности. Надо найти познание, которое избавит вас от цепи иллюзий.+Колесница= малодушный поступок. Даже если были разрывы отношений из разочарования- -прислушайтесь к голосу совести. Колесница выпала для того, чтобы облегчить трудности пути.+Справедливость=отсрочка окончательного решения.+Отшельник=Уход из мира. Оставьте свои иллюзии --они опасны. Пора взяться за дело+Колесо=опасность на воде или от воды.+Сила=разлука. Прежде чем вы осуществите свои планы, вам придется решить много проблем.+Повешенный=Вы в плену иллюзий. Долгожданное пробуждение не наступает, но оно обязательно будет. Начинается новый этап в жизни.+Смерть=Подъем будет медленным и трудным. С каждым шажком вы ощущаете оцепенение. Но все же вы будете подниматься все выше и выше. Главное --не торопиться.+Умеренность=поражение.+Дьявол=Плен. Иллюзии очень сильны, но не отчаивайтесь. Немного смелости и терпения и вам удастся преодолеть этот скользкий подъем.+Башня=Упадок сил.+Звезда=Нежелание трогаться с места. Судьба ведет вас к благополучию, но иллюзии мешают вам понять ее замысел и согласиться с ним.+Луна=Денежные потери. Вы целиком во власти иллюзий.+Солнце=Случайная афера. Никакие материальные средства уже не помогут вам достичь цели.+Суд=упадок сил. Приговор судьбы вызывает у вас эмоциональный протест. Эти эмоции вызваны в первую очередь изменением условий жизни, наступившим столь внезапно. Вам необходим покой, чтобы улеглись эмоции, и восстановилась ясность мысли.+Мир=Цель, ускользнувшая от вас. От иллюзий лучше избавиться раз и навсегда.",
@@ -269,7 +277,7 @@ def createcardtaro():
         love2 = "«хочу, сама не знаю что». Колебания в отношениях, вместо того чтобы продолжать двигаться вперед. Недостаток уверенности. ",
         yesno ="Непредсказуем, не так, как вы предполагаете сейчас. Чтобы получить то, что вы желаете, вам необходимо попробовать сделать что-то новое или начать с нуля. В ситуации поможет нестандартный подход. Возможно, она потребует от вас сделать шаг в неизвестность. Доверьтесь обстоятельствам, следуйте за знаками.")
     card2 = Onlinetaro(
-        carta = "Маг",
+        carta = "Маг", 
         eng = "mag",
         img = site+"/taro/2.jpg",
         type_carta = "Старший Аркан",
@@ -2056,24 +2064,26 @@ def createcardtaro():
         card71,card72,card73,card74,card75,card76,card77,card78])
     session.commit()
 
+
+
 class OnlineTaro:
    
     @staticmethod
-    async def cardday ():
+    def cardday ():
         session1 = Session(bind=engine)
         random = randint(1, 28)
         context = session1.query(Onlinetaro.carta,Onlinetaro.img,Onlinetaro.busnes1).filter(Onlinetaro.id == random).first()
         return context
 
     @staticmethod
-    async def getrandomcard():
+    def getrandomcard():
         session1 = Session(bind=engine)
         random = randint(1, 78)
         context = session1.query(Onlinetaro.carta,Onlinetaro.graph_simphol,Onlinetaro.img,Onlinetaro.general_carta).filter(Onlinetaro.id == random).first()
         return context
 
     @staticmethod
-    async def generated_card_func(item):
+    def generated_card_func(item):
         generated_card = []
         select_card=[]
         count=session.query(Onlinetaro).count()
@@ -2086,7 +2096,7 @@ class OnlineTaro:
         return generated_card
     
     @staticmethod
-    async def generated_card_position():
+    def generated_card_position():
         random_value =[0,1]
         rotation = random.choice(random_value)
         if (rotation == 0):
@@ -2095,7 +2105,7 @@ class OnlineTaro:
             return "180deg"
 
     @staticmethod
-    async def generated_card_info(item, generated_card):
+    def generated_card_info(item, generated_card):
         context = {}
         for i in range (0,item):
             number_card = "card"+str(i)
@@ -2122,8 +2132,8 @@ class OnlineTaro:
        
         return context          
 
-rubashka = "http://centr-taro-ferre.ru/static/taro/rubashka.jpg"
-param = 0
+rubashka = "http://127.0.0.1:5000/static/taro/rubashka.jpg"
+param = 0 
 logger_info = None
 header ={}
 userprofile = None
@@ -2132,7 +2142,7 @@ superUser = None
 
 class Logger_info:
     @staticmethod
-    async def logger(request,operation,name, error="0"):
+    def logger(request,operation,name, error="0"):
         with engine.connect() as conn:
             transaction = conn.begin()
             try:
@@ -2149,7 +2159,7 @@ class Logger_info:
 
 class Settings:
     @staticmethod
-    async def getglobalsettings(): 
+    def getglobalsettings(): 
         setting = session.query(Settings_site).first()
         setting_title = setting.site_name
         setting_title_eng = setting.site_name_eng
@@ -2190,15 +2200,15 @@ class Registration:
         self.curs_list = []
         self.curs_count = 0
 
-    async def getlencurs(self):
+    def getlencurs(self):
         return len(curs_list)
     
-    async def cursetobuy(self):
+    def cursetobuy(self):
         global header
         header['curstobuy'] = self.curs_count
         header['curstobuylist'] = self.curs_list  
 
-    async def getcurse(self):
+    def getcurse(self):
         curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
         return curses 
 
@@ -2220,18 +2230,20 @@ def authorization_verification(f):
 
 @app.route('/')
 @app.route('/home')
-async def index():
-    randomcard= await OnlineTaro.cardday()
-    context = await OnlineTaro.getrandomcard()
-    title = "Главная страница "
+def index():
+    randomcard=OnlineTaro.cardday()
+    context = OnlineTaro.getrandomcard()
+    title = "Главная страница"
     return render_template('index.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url)
 
 @app.route('/curses/')
 @app.route('/curses')
-async def curses_head():
+def curses_head():
+
     title = "Список доступных курсов"
-    randomcard= await OnlineTaro.cardday()
-    context = await OnlineTaro.getrandomcard()
+    randomcard=OnlineTaro.cardday()
+    context = OnlineTaro.getrandomcard()
+
     curses = session.query(Curses).all()
     for curs in curses:
         curs.description = Markup(curs.description)
@@ -2240,24 +2252,24 @@ async def curses_head():
 
 
 @app.route('/basket')
-async def basket():
-    randomcard= await OnlineTaro.cardday()
+def basket():
+    randomcard=OnlineTaro.cardday()
     title = "Корзина"
-    curs = await registration.getcurse()
+    curs = registration.getcurse()
     return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs)   
 
 @app.route('/reset')
-async def reset():
-    randomcard=await OnlineTaro.cardday()
+def reset():
+    randomcard=OnlineTaro.cardday()
     title = "Сброс пароля"
     return render_template('reset.html', header = header,randomcard=randomcard, title = title)
 
 
 @app.route('/curses/<int:curs_id>/')
 @app.route('/curses/<int:curs_id>/')
-async def curse_alone(curs_id):
+def curse_alone(curs_id):
     try:
-        randomcard=await OnlineTaro.cardday()
+        randomcard=OnlineTaro.cardday()
         curse = session.query(Curses).filter(Curses.curses_id == str(curs_id)).first()
         curse.description = Markup(curse.description)
         title = curse.name +" "
@@ -2293,9 +2305,9 @@ def userlist_user(user_id):
 
 @app.route('/backoffice/userlist')
 @authorization_verification
-async def userlist():
+def userlist():
     title ="Список пользователь"
-    await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+    logger_info.logger(request.method,request.base_url, userprofile.first_name)
     users_list = session.query(Users).order_by(Users.id.desc()).all()
     return render_template('userlist.html',data = users_list, header=header, title = title, rule=userprofile.rule)
 
@@ -2303,21 +2315,21 @@ async def userlist():
 @app.route('/backoffice/userlogs')
 @app.route('/backoffice/userlogs?page=<int:page_num>')
 @authorization_verification
-async def userlogs():
-    await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+def userlogs():
+    logger_info.logger(request.method,request.base_url, userprofile.first_name)
     return render_template('userlogs.html', header=header, rule=userprofile.rule)
 
 @app.route('/backoffice/')
 @app.route('/backoffice')
 @authorization_verification
-async def backoffice():
-    await logger_info.logger(request.method,request.base_url,userprofile.email)
+def backoffice():
+    logger_info.logger(request.method,request.base_url,userprofile.email)
     return render_template('layout_lk.html', header=header, rule=userprofile.rule)    
 
 @app.route('/backoffice/curses/')
 @app.route('/backoffice/curses')
 @authorization_verification
-async def curses():
+def curses():
     error_curs = 0 
     if (userprofile.cursdelerrorcount == 0): 
         error_curs = userprofile.cursdelerror
@@ -2326,7 +2338,7 @@ async def curses():
     title="Список курсов"
 
     try: 
-        await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+        logger_info.logger(request.method,request.base_url, userprofile.first_name)
         context = session.query(Curses).all()
     except: 
         session.rollback()
@@ -2335,7 +2347,7 @@ async def curses():
 
 @app.route('/backoffice/curses/<int:curses_id>/del=<string:delit>', methods=['GET', 'POST'])
 @authorization_verification
-async def cursesdel(curses_id,delit):
+def cursesdel(curses_id,delit):
      if request.method == "POST":
         if (delit == "true"):
              with engine.connect() as conn:
@@ -2344,7 +2356,7 @@ async def cursesdel(curses_id,delit):
                     session.query(Curses).filter(Curses.curses_id == curses_id).delete()
                     session.commit()
                     transaction.commit()
-                    await logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
+                    logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
                     userprofile.cursdelerror = 0
 
                 except Exception:
@@ -2425,9 +2437,9 @@ def addcurse():
 @app.route('/backoffice/curses/<int:curses_id>', methods=['GET', 'POST'])
 @app.route('/backoffice/curses/<int:curses_id>', methods=['GET', 'POST'])
 @authorization_verification
-async def lessons(curses_id):
+def lessons(curses_id):
         title = "Курс " + str(curses_id)
-        await logger_info.logger(request.method,request.base_url, userprofile.email)
+        logger_info.logger(request.method,request.base_url, userprofile.email)
         lessons = session.query(Lessons.curse,Lessons.name,Lessons.description,Lessons.lesson,Lessons.created_on).filter(Lessons.curse == curses_id).all()
         return render_template('lessons.html', lessons = lessons, curse = curses_id, title = title, header=header)
 
@@ -2448,11 +2460,11 @@ def lessondel(curses_id,lesson_id,delit):
                 except Exception as E:
                     transaction.rollback()   
                     logger_info.logger(request.method,request.base_url, userprofile.email, E)
-            return redirect("/backoffice/curses/{curses_id}")
+            return redirect(f"/backoffice/curses/{curses_id}")
 
 @app.route('/backoffice/curses/edit=<int:curse_id>', methods=['GET', 'POST'])
 @authorization_verification      
-async def cursedit(curse_id):
+def cursedit(curse_id):
     if request.method =='POST':
         curses_id = request.form['curses_id']
         with engine.connect() as conn:
@@ -2473,9 +2485,9 @@ async def cursedit(curse_id):
                     transaction.rollback()   
                     logger_info.logger(request.method,request.base_url, userprofile.email, E)
 
-        return redirect("/backoffice/curses/edit={curse_id}")
+                return redirect(f"/backoffice/curses/edit={curse_id}")
     else: 
-        await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+        logger_info.logger(request.method,request.base_url, userprofile.first_name)
         context = session.query(Curses).filter(Curses.curses_id == curse_id).first()
         data =  context.description
         return render_template('curseedit.html', context = context, user = userprofile.email, data = data, title = "Курс" + str(curse_id), header = header)
@@ -2484,13 +2496,13 @@ async def cursedit(curse_id):
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>/', methods=['GET', 'POST'])
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>', methods=['GET', 'POST'])
 @authorization_verification
-async def lessonedit(curses_id,lesson_id):
+def lessonedit(curses_id,lesson_id):
         if (int(lesson_id) > 0):
             if request.method == 'GET':
                 lesson = session.query(Lessons).filter((Lessons.curse == curses_id) & (Lessons.lesson == lesson_id)).first()
                 data = lesson.data
                 homework = lesson.homework
-                await logger_info.logger(request.method,request.base_url, userprofile.email)
+                logger_info.logger(request.method,request.base_url, userprofile.email)
                 return render_template('lessonedit.html', lesson = lesson, data = data, homework = homework)
 
             if request.method == 'POST':
@@ -2532,10 +2544,10 @@ async def lessonedit(curses_id,lesson_id):
                         session.add(Lessons(curse=curse, name= name,description=description,lesson=lesson,homework=homework,data=data))
                         session.commit()
                         transaction.commit() 
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
+                        logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
                     except Exception as E:
                         transaction.rollback()
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, E)
+                        logger_info.logger(request.method,request.base_url, userprofile.email, E)
                     
                 lesson = session.query(Lessons).filter((Lessons.curse == curse) & (Lessons.lesson == lesson)).first()
                 data = lesson.data
@@ -2544,9 +2556,9 @@ async def lessonedit(curses_id,lesson_id):
 
 @app.route('/backoffice/curses/view/curs=<int:curses_id>&lesson=<int:lesson_id>', methods=['GET', 'POST'])
 @authorization_verification
-async def lessonview(curses_id,lesson_id):
+def lessonview(curses_id,lesson_id):
     title = "Урок " + str(lesson_id) + " Курс" + str(curses_id)
-    await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+    logger_info.logger(request.method,request.base_url, userprofile.first_name)
     lessondata = session.query(Lessons).filter(and_(Lessons.curse  == curses_id, Lessons.lesson == lesson_id)).first()
     data = Markup(lessondata.data)
     homework = Markup(lessondata.homework)
@@ -2555,7 +2567,8 @@ async def lessonview(curses_id,lesson_id):
 
 @app.route('/backoffice/settings', methods=['GET', 'POST'])
 @authorization_verification
-async def setting():
+def setting():
+    app.logger.info(userprofile.first_name)
     title = "Настройка сайта"
     session_data = session.query(Settings_site).filter(Settings_site.id == '1').first()
 
@@ -2580,10 +2593,11 @@ async def setting():
                         x.meta_tag = meta_tag1
                         session.commit()
                         transaction.commit() 
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
+                        logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
                     except Exception as E:
                         transaction.rollback()
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, E)
+                        logger_info.logger(request.method,request.base_url, userprofile.email, E)
+            
             return redirect(url_for('setting'))
         except: 
             return render_template('setting.html', title= title, header=header)
@@ -2594,8 +2608,8 @@ async def setting():
 
 @app.route('/backoffice/taroedit/<int:card_id>', methods=['GET', 'POST'])
 @authorization_verification
-async def taroonlineeditcard(card_id=1):
-    await logger_info.logger(request.method,request.base_url, userprofile.first_name)
+def taroonlineeditcard(card_id=1):
+    logger_info.logger(request.method,request.base_url, userprofile.first_name)
     if request.method == 'POST':
         id = request.form['id']
         carta = request.form['carta']
@@ -2647,12 +2661,12 @@ async def taroonlineeditcard(card_id=1):
                         x.yesno=yesno
                         session.commit()
                         transaction.commit() 
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
+                        logger_info.logger(request.method,request.base_url, userprofile.email, "transaction.commit()")
                     except Exception as E:
                         transaction.rollback()
-                        await logger_info.logger(request.method,request.base_url, userprofile.email, E)
+                        logger_info.logger(request.method,request.base_url, userprofile.email, E)
 
-        return redirect("/backoffice/taroedit/{card_id}")
+        return redirect(f"/backoffice/taroedit/{card_id}")
        
     else: 
         context = session.query(Onlinetaro).all() 
@@ -2668,9 +2682,9 @@ def taroonlineedit():
     return render_template('taroonlineedit.html', data = context, title= "Редактирование Таро карт", header=header)
 
 @app.route('/login')
-async def login_user():
+def login_user():
     title = "Регистрация "
-    randomcard=await OnlineTaro.cardday()
+    randomcard=OnlineTaro.cardday()
 
     url = render_template('/auth/login.html', header=header, title = title, share_url=request.base_url, randomcard = randomcard )
     try:
@@ -2687,7 +2701,7 @@ async def login_user():
         return url
     
 @app.route('/auth/login', methods=['POST', 'GET'])
-async def login_auth():
+def login_auth():
     try:
         if request.method == 'POST':
             user_email = request.form['email'].strip()
@@ -2716,7 +2730,7 @@ async def login_auth():
                 global logger_info
                 logger_info = Logger_info()
                 ses['log_in'] = True
-                await logger_info.logger(request.method,request.base_url, userprofile.email)
+                logger_info.logger(request.method,request.base_url, userprofile.email)
                 return redirect(url_for('backoffice'))
                 
             else:
@@ -2740,9 +2754,9 @@ def logout():
 
 @app.route('/taro/<string:category>/', methods=['GET', 'POST'])
 @app.route('/taro/<string:category>', methods=['GET', 'POST'])
-async def tarocategory(category):
+def tarocategory(category):
     author = header['site_name']
-    randomcard= await OnlineTaro.cardday()
+    randomcard=OnlineTaro.cardday()
     share_url = request.base_url
     site_name = header['site_name']
 
@@ -2800,19 +2814,20 @@ def getmatch(name):
 
 
 @app.route('/taro/<string:category>/<string:name>', methods=['GET', 'POST'])
-async def tarocard(category, name):
+def tarocard(category, name):
     url = "/taro/"
     site_name = header['site_name']
-    randomcard=await OnlineTaro.cardday()
+    randomcard=OnlineTaro.cardday()
     context = session.query(Onlinetaro).filter(Onlinetaro.eng == name).first()
     context2 = session.query(Onlinetaro.img,Onlinetaro.carta,Onlinetaro.eng, Onlinetaro.type_carta_eng).all()
     title=str(context.carta)+ "— обозначение "+context.carta+" в Таро, значение в отношениях и любви, сочетание с другими картами, толкование перевернутой карты Уэйта Райдера"
     array= getmatch(name)
+
     return render_template('tarocard.html', data = context, data2 = context2,url=url, author = site_name, keywords=context.name2_carta, randomcard=randomcard, title=title, array=array, description = context.description_cart, share_image = context.img, share_url=request.base_url, site_name= site_name, header=header)
 
 @app.route('/taro')
-async def taro():
-    randomcard=await OnlineTaro.cardday()
+def taro():
+    randomcard=OnlineTaro.cardday()
     title = "Карты Таро: Значение и толкование"
     url="/taro/"
     context = session.query(Onlinetaro).all()
@@ -2823,8 +2838,8 @@ async def taro():
 
 @app.route('/backoffice/taro/')
 @app.route('/backoffice/taro')
-async def backofficetaro():
-    randomcard=await OnlineTaro.cardday()
+def backofficetaro():
+    randomcard=OnlineTaro.cardday()
     title = "Карты Таро: Значение и толкование"
     url="/backoffice/taro/"
     context = session.query(Onlinetaro).all()
@@ -2833,8 +2848,8 @@ async def backofficetaro():
 
 @app.route('/backoffice/taro/<string:category>/', methods=['GET', 'POST'])
 @app.route('/backoffice/taro/<string:category>', methods=['GET', 'POST'])
-async def backoffitarocategory(category):
-    randomcard= await OnlineTaro.cardday()
+def backoffitarocategory(category):
+    randomcard=OnlineTaro.cardday()
     title = ""
     url="/backoffice/taro/"
     if (str(category)=="mladshie-arkany"):
@@ -2872,14 +2887,14 @@ def backoffitarotarocard(category, name):
 
 @app.route('/taroonline/')
 @app.route('/taroonline')
-async def taroonline():
-    randomcard=await OnlineTaro.cardday()
+def taroonline():
+    randomcard=OnlineTaro.cardday()
     return render_template('taroonline.html', randomcard=randomcard, header=header)
 
 @app.route('/taroonline/vokzal/', methods=['GET', 'POST'])
 @app.route('/taroonline/vokzal', methods=['GET', 'POST'])
-async def vokzal():
-    randomcard=await OnlineTaro.cardday()
+def vokzal():
+    randomcard=OnlineTaro.cardday()
     if (request.method == 'POST'):
         item = 17
         generated_card = OnlineTaro.generated_card_func(item)
@@ -2890,64 +2905,64 @@ async def vokzal():
 
 @app.route('/taroonline/relation/', methods=['GET', 'POST'])
 @app.route('/taroonline/relation', methods=['GET', 'POST'])
-async def relation():
-    randomcard= await OnlineTaro.cardday()
+def relation():
+    randomcard=OnlineTaro.cardday()
     if request.method == 'POST':
         item = 8
-        generated_card = await OnlineTaro.generated_card_func(item)
-        context  = await OnlineTaro.generated_card_info(item, generated_card)
+        generated_card = OnlineTaro.generated_card_func(item)
+        context  = OnlineTaro.generated_card_info(item, generated_card)
         return render_template('relation.html', context = context, data=1, randomcard=randomcard, header=header)
     else:
         return render_template('relation.html', data = 0, randomcard=randomcard, rubashka = rubashka, header=header)
 
 @app.route('/taroonline/yesno/', methods=['GET', 'POST'])
 @app.route('/taroonline/yesno', methods=['GET', 'POST'])
-async def yesno():
-    randomcard=await OnlineTaro.cardday()
+def yesno():
+    randomcard=OnlineTaro.cardday()
     if request.method == 'POST':
         item = 3
-        generated_card = await OnlineTaro.generated_card_func(item)
-        rotate = await OnlineTaro.generated_card_position()
-        context  = await OnlineTaro.generated_card_info(item, generated_card)
+        generated_card = OnlineTaro.generated_card_func(item)
+        rotate = OnlineTaro.generated_card_position()
+        context  = OnlineTaro.generated_card_info(item, generated_card)
         return render_template('yesno.html', context = context, rotate=rotate, data=1, randomcard=randomcard, header=header)
     else:
         return render_template('yesno.html',data=0, randomcard=randomcard, rubashka = rubashka, header=header)
 
 @app.route('/taroonline/keltkrest/', methods=['GET', 'POST'])        
 @app.route('/taroonline/keltkrest', methods=['GET', 'POST'])
-async def keltkrest():
-    randomcard=await OnlineTaro.cardday()
+def keltkrest():
+    randomcard=OnlineTaro.cardday()
     if request.method == 'POST':
         item = 10
-        generated_card = await OnlineTaro.generated_card_func(item)
-        rotate = await OnlineTaro.generated_card_position()
-        context  =await OnlineTaro.generated_card_info(item, generated_card)
+        generated_card = OnlineTaro.generated_card_func(item)
+        rotate = OnlineTaro.generated_card_position()
+        context  =OnlineTaro.generated_card_info(item, generated_card)
         return render_template('keltkrest.html', context = context, data = 1, randomcard=randomcard, header=header)
     else:
         return render_template('keltkrest.html', data = 0, randomcard=randomcard, rubashka = rubashka, header=header)
 
 @app.route('/taroonline/face/', methods=['GET', 'POST'])
 @app.route('/taroonline/face', methods=['GET', 'POST'])
-async def face():
-    randomcard= await OnlineTaro.cardday()
+def face():
+    randomcard=OnlineTaro.cardday()
     if request.method == 'POST':
         item = 8
-        generated_card = await OnlineTaro.generated_card_func(item)
-        rotate = await OnlineTaro.generated_card_position()
-        context  = await OnlineTaro.generated_card_info(item, generated_card)
+        generated_card = OnlineTaro.generated_card_func(item)
+        rotate = OnlineTaro.generated_card_position()
+        context  = OnlineTaro.generated_card_info(item, generated_card)
         return render_template('face.html', context = context, data = 1, randomcard=randomcard, header=header)
     else:
         return render_template('face.html', data = 0, randomcard=randomcard, rubashka = rubashka, header=header)
 
 @app.route('/taroonline/choice/', methods=['GET', 'POST'])
 @app.route('/taroonline/choice', methods=['GET', 'POST'])
-async def choice():
-    randomcard=await OnlineTaro.cardday()
+def choice():
+    randomcard=OnlineTaro.cardday()
     if request.method == 'POST':
         item = 7
-        generated_card = await OnlineTaro.generated_card_func(item)
-        rotate = await OnlineTaro.generated_card_position()
-        context  = await OnlineTaro.generated_card_info(item, generated_card)
+        generated_card = OnlineTaro.generated_card_func(item)
+        rotate = OnlineTaro.generated_card_position()
+        context  = OnlineTaro.generated_card_info(item, generated_card)
         return render_template('choice.html', context = context, data = 1, randomcard=randomcard, header=header)
     else:
         return render_template('choice.html', data = 0, randomcard=randomcard, rubashka = rubashka, header=header)
@@ -2955,12 +2970,12 @@ async def choice():
 @app.route('/taroonline/lover/', methods=['GET', 'POST'])
 @app.route('/taroonline/lover', methods=['GET', 'POST'])
 def lover():
-    randomcard=await OnlineTaro.cardday()
+    randomcard=OnlineTaro.cardday()
     if request.method == 'POST':
         item = 6
-        generated_card =await OnlineTaro.generated_card_func(item)
-        rotate = await OnlineTaro.generated_card_position()
-        context  = await OnlineTaro.generated_card_info(item, generated_card)
+        generated_card = OnlineTaro.generated_card_func(item)
+        rotate = OnlineTaro.generated_card_position()
+        context  = OnlineTaro.generated_card_info(item, generated_card)
         return render_template('lover.html', context = context, data = 1, randomcard=randomcard, header=header)
     else:
         return render_template('lover.html', data = 0, randomcard=randomcard, rubashka = rubashka, header=header)
@@ -2968,19 +2983,19 @@ def lover():
 @app.route('/taroonline/man/', methods=['GET', 'POST'])
 @app.route('/taroonline/man', methods=['GET', 'POST'])
 def man():
-    randomcard=await OnlineTaro.cardday()
+    randomcard=OnlineTaro.cardday()
     if request.method == 'POST':
         item = 7
-        generated_card =await OnlineTaro.generated_card_func(item)
-        rotate = await OnlineTaro.generated_card_position()
-        context  = await OnlineTaro.generated_card_info(item, generated_card)
+        generated_card = OnlineTaro.generated_card_func(item)
+        rotate = OnlineTaro.generated_card_position()
+        context  = OnlineTaro.generated_card_info(item, generated_card)
         return render_template('man.html', context = context, data = 1, randomcard=randomcard, header=header)
     else:
         return render_template('man.html', data = 0, randomcard=randomcard, rubashka = rubashka, header=header)
 
 @app.route('/pifagor')
 def pifagor():
-    randomcard= await OnlineTaro.cardday()
+    randomcard=OnlineTaro.cardday()
     return render_template('pifagor.html', randomcard=randomcard, header=header)
 
 def getsiteparam(item="all"):
@@ -2989,21 +3004,21 @@ def getsiteparam(item="all"):
         return settings
 
 @app.errorhandler(404)
-async def page_not_found(e):
-    randomcard = await OnlineTaro.cardday()
-    context = await OnlineTaro.getrandomcard()
+def page_not_found(e):
+    randomcard = OnlineTaro.cardday()
+    context = OnlineTaro.getrandomcard()
     return render_template('404.html',card = context, randomcard=randomcard, header = header), 404
 
 @app.errorhandler(403)
-async def forbidden(e):
-    randomcard =await OnlineTaro.cardday()
-    context = await OnlineTaro.getrandomcard()
+def forbidden(e):
+    randomcard = OnlineTaro.cardday()
+    context = OnlineTaro.getrandomcard()
     return render_template('403.html',card = context, randomcard=randomcard, header = header), 403
 
 @app.errorhandler(500)    
-async def internal_server_error(e):
-    randomcard=await OnlineTaro.cardday()
-    context =await OnlineTaro.getrandomcard()
+def internal_server_error(e):
+    randomcard=OnlineTaro.cardday()
+    context = OnlineTaro.getrandomcard()
     return render_template('404.html',card = context, randomcard=randomcard, header = header), 500
 
 
@@ -3045,6 +3060,7 @@ class Api():
                 {'plus':context.love1,
                 'minus':context.love2,},
                 'yesno':context.yesno},
+                
                 data.append(card_data)
 
         except ValueError:
@@ -3091,12 +3107,15 @@ def get_card(card):
     return jsonify({'card':data})
 
 if __name__ == "__main__":
-    '''create_db()'''
+    create_db()
     Settings.getglobalsettings()
     registration = Registration()
-    app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    app.run(host='0.0.0.0',port=80,debug=False)
+    app.config['SECRET_KEY'] = '56756756756757'    
+    app.run(debug=True)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
+    
+    
+
 

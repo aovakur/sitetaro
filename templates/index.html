@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
+<meta name="yandex-verification" content="43562db855876cf2" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% if description %}{{description}}{% endif %} {% if header %}{{header['description']}} {% endif %}">
@@ -196,7 +197,7 @@ button.btnclick:hover, a.bot8:focus {
      <header>
     <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-        <span class="fs-4">#</span>
+        <span class="fs-4">Главная</span>
       </a>
 
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
@@ -204,12 +205,12 @@ button.btnclick:hover, a.bot8:focus {
         <a class="me-3 py-2 text-dark text-decoration-none" href="/curses">Курсы</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="/login">Авторизация</a>
       </div>
+<!--
       <a href="/basket?curslist={{header['curstobuy']}}&cursid={{header['curstobuylist']}}">Корзина &nbsp;</a>  
       {% if header['curstobuy'] %}
-
       <a href="/basket?curslist={{header['curstobuy']}}&cursid={{header['curstobuylist']}}">( {% if header['curstobuy'] %} {{header['curstobuy']}} {% endif %} курса)</a> 
       {% endif %} 
-      
+    -->  
       </div>
     </div>
   </header>
@@ -275,7 +276,8 @@ button.btnclick:hover, a.bot8:focus {
  
   <!-- FOOTER -->
   <footer class="container">
-    <p>&copy; 2017–2022 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+   {% extends "footer.html" %}   
+<!-- <p>&copy; 2017–2022 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> -->
   </footer>
 </main>
 
