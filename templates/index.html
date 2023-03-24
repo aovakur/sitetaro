@@ -183,6 +183,11 @@ p{
 {
 }
 
+.basket
+{
+  padding-top: 7px;
+}
+
 button.btnclick:hover, a.bot8:focus {
    border-color: #42372e;
    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
@@ -205,12 +210,15 @@ button.btnclick:hover, a.bot8:focus {
         <a class="me-3 py-2 text-dark text-decoration-none" href="/curses">Курсы</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="/login">Авторизация</a>
       </div>
-<!--
+
+      <div class="basket">
+       {% if header['curstobuy'] %}
       <a href="/basket?curslist={{header['curstobuy']}}&cursid={{header['curstobuylist']}}">Корзина &nbsp;</a>  
-      {% if header['curstobuy'] %}
+     
       <a href="/basket?curslist={{header['curstobuy']}}&cursid={{header['curstobuylist']}}">( {% if header['curstobuy'] %} {{header['curstobuy']}} {% endif %} курса)</a> 
       {% endif %} 
-    -->  
+      </div>
+    
       </div>
     </div>
   </header>

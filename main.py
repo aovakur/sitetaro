@@ -25,8 +25,8 @@ import asyncio
 
 app = Flask(__name__)
 
-engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")
-'''engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")'''
+'''engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")'''
+engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")
 session = Session(bind=engine)
 Base = declarative_base()
 
@@ -375,6 +375,9 @@ class Registration:
     def __init__(self):
         self.curs_list = []
         self.curs_count = 0
+        self.discont = 0
+        self.cost=0;
+        self.cost_final=0;
 
     def getlencurs(self):
         return len(curs_list)
@@ -388,6 +391,12 @@ class Registration:
         curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
         return curses 
 
+    def getcast(self):
+        curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
+        temp = 0
+        for cur in curses:  
+            temp = cur.cost + temp
+        self.cost = temp
 
 class Header():
     pass
@@ -433,12 +442,19 @@ async def curses_head():
 
 @app.route('/basket')
 async def basket():
+
     try:
             randomcard= await OnlineTaro.cardday()
             title = "Корзина"
-            curs = await registration.getcurse()
+            curs = registration.getcurse()
+            if (registration.curs_count >= 2):
+                registration.discont = "10%"
+            registration.getcast()
+            registration.cost_final=registration.cost - registration.discont
+
+
     finally:
-            return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs)   
+            return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = registration.cost, discount = registration.discont, cost_final = registration.cost_final)   
 
 @app.route('/reset')
 async def reset():
@@ -1399,8 +1415,8 @@ if __name__ == "__main__":
     Settings.getglobalsettings()
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    '''app.run(host='0.0.0.0',port=80,debug=False)'''
-    serve(app,host='0.0.0.0',port=80)
+    app.run(host='0.0.0.0',port=80,debug=True)
+    '''serve(app,host='0.0.0.0',port=80)'''
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
