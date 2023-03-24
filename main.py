@@ -319,7 +319,7 @@ superUser = None
 
 class Logger_info:
     @staticmethod
-    async def logger(request,operation,name, error="0"):
+    def logger(request,operation,name, error="0"):
         with engine.connect() as conn:
             transaction = conn.begin()
             try:
@@ -661,7 +661,7 @@ def lessondel(curses_id,lesson_id,delit):
                         logger_info.logger(request.method,request.base_url, userprofile.email, E)
                 
     finally:
-        return redirect("/backoffice/curses/{curses_id}")
+        return redirect(f"/backoffice/curses/{curses_id}")
 
 
 @app.route('/backoffice/curses/edit=<int:curse_id>', methods=['GET', 'POST'])
@@ -688,14 +688,14 @@ def cursedit(curse_id):
                         transaction.rollback()   
                         logger_info.logger(request.method,request.base_url, userprofile.email, E)
 
-            return redirect("/backoffice/curses/edit={curse_id}")
+            return redirect(f"/backoffice/curses/edit={curse_id}")
         else: 
             logger_info.logger(request.method,request.base_url, userprofile.first_name)
             context = session.query(Curses).filter(Curses.curses_id == curse_id).first()
             data =  context.description
             return render_template('curseedit.html', context = context, user = userprofile.email, data = data, title = "Курс" + str(curse_id), header = header)
     except: 
-        return render_template('curseedit.html', context = context, user = userprofile.email, data = data, title = "Курс" + str(curse_id), header = header)
+       return redirect(f"backoffice/curses/edit={curse_id}") 
 
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>/', methods=['GET', 'POST'])
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>', methods=['GET', 'POST'])
@@ -1265,6 +1265,7 @@ async def pifagor():
         return render_template('pifagor.html', randomcard=randomcard, header=header)
 
 def getsiteparam(item="all"):
+    settings = ""
     try:
         if (item=="all"):
             settings = session.query(Settings_site).get(1)
@@ -1274,6 +1275,8 @@ def getsiteparam(item="all"):
 
 @app.errorhandler(404)
 async def page_not_found(e):
+    randomcard=""
+    context =""
     try: 
         randomcard = await OnlineTaro.cardday()
         context = await OnlineTaro.getrandomcard()
@@ -1282,7 +1285,9 @@ async def page_not_found(e):
 
 @app.errorhandler(403)
 async def forbidden(e):
-    try: 
+        randomcard=""
+        context = ""
+	try: 
         randomcard =await OnlineTaro.cardday()
         context = await OnlineTaro.getrandomcard()
     finally: 
@@ -1290,7 +1295,9 @@ async def forbidden(e):
 
 @app.errorhandler(500)    
 async def internal_server_error(e):
-    try: 
+        randomcard = ""
+        context = ""
+	try: 
         randomcard=await OnlineTaro.cardday()
         context =await OnlineTaro.getrandomcard()
     finally: 
@@ -1382,12 +1389,13 @@ def get_card(card):
 
 if __name__ == "__main__":
     '''create_db()'''
+    from waitress import serve    
     Settings.getglobalsettings()
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    app.run(host='0.0.0.0',port=80,debug=False)
-    '''app.run(host='0.0.0.0',port=80,debug=True)'''
+    '''app.run(host='0.0.0.0',port=80,debug=False)'''
+    serve(app,host='0.0.0.0',port=80)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
-
+v
