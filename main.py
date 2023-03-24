@@ -407,12 +407,15 @@ def authorization_verification(f):
 @app.route('/')
 @app.route('/home')
 async def index():
+    context = ""
+    title = ""
+    randomcard = "" 
     try:
         randomcard= await OnlineTaro.cardday()
         context = await OnlineTaro.getrandomcard()
         title = "Главная страница "
     finally:
-        return render_template('index.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url)
+        return render_template('start.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url)
 
 @app.route('/curses/')
 @app.route('/curses')

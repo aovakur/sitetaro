@@ -5,10 +5,11 @@
 {% block content %}
   
 {% for curse in curses %}
-<p>{{curse.name}}</p>
-<p><img src="{{curse.picture}}"></p>
+<p><h2>{{curse.name}}</h2></p>
+<p><img class="col-md-8 col-sm-12" src="{{curse.picture}}"></p>
+<p><b>Стоимость курса: {{curse.cost}} рублей </b></p>
 <p>{{curse.description}}</p>
-<p><a href="/curses/subscribe/{{curse.curses_id}}">Записаться на курс</a></p>
+<p><a class="btn btn-primary"  href="/curses/subscribe/{{curse.curses_id}}" role="button">Записаться на курс</a></p>
 {% endfor %}
 
 {% endblock %}
