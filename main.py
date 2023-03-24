@@ -376,15 +376,15 @@ class Registration:
         self.curs_list = []
         self.curs_count = 0
 
-    async def getlencurs(self):
+    def getlencurs(self):
         return len(curs_list)
     
-    async def cursetobuy(self):
+    def cursetobuy(self):
         global header
         header['curstobuy'] = self.curs_count
         header['curstobuylist'] = self.curs_list  
 
-    async def getcurse(self):
+    def getcurse(self):
         curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
         return curses 
 
@@ -1285,9 +1285,9 @@ async def page_not_found(e):
 
 @app.errorhandler(403)
 async def forbidden(e):
-        randomcard=""
-        context = ""
-	try: 
+    randomcard=""
+    context = ""
+    try: 
         randomcard =await OnlineTaro.cardday()
         context = await OnlineTaro.getrandomcard()
     finally: 
@@ -1295,9 +1295,9 @@ async def forbidden(e):
 
 @app.errorhandler(500)    
 async def internal_server_error(e):
-        randomcard = ""
-        context = ""
-	try: 
+    randomcard = ""
+    context = ""
+    try: 
         randomcard=await OnlineTaro.cardday()
         context =await OnlineTaro.getrandomcard()
     finally: 
@@ -1398,4 +1398,4 @@ if __name__ == "__main__":
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
-v
+
