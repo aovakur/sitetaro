@@ -319,7 +319,7 @@ superUser = None
 
 class Logger_info:
     @staticmethod
-    async def logger(request,operation,name, error="0"):
+    def logger(request,operation,name, error="0"):
         with engine.connect() as conn:
             transaction = conn.begin()
             try:
