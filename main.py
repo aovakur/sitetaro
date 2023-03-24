@@ -701,6 +701,9 @@ def cursedit(curse_id):
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>', methods=['GET', 'POST'])
 @authorization_verification
 def lessonedit(curses_id,lesson_id):
+    lesson = ""
+    data =""
+    homework = ""
     try:
         if (int(lesson_id) > 0):
             if request.method == 'GET':
