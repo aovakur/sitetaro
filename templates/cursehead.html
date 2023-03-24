@@ -4,10 +4,12 @@
 
 {% block content %}
   
-<p>{{curse.name}}</p>
-<p><img src="{{curse.picture}}"></p>
+<p><h2>{{curse.name}}</h2></p>
+<p><img class="col-md-8 col-sm-12" src="{{curse.picture}}"></p>
+<p><b>Стоимость курса: {{curse.cost}} рублей </b></p>
 <p>{{curse.description}}</p>
-<p><a href="/curses/subscribe/{{curse.curses_id}}">Добавить в корзину</a></p>
-<p><a href="/basket/?curslist={{curse.curses_id}}&cursid={{curse.curses_id}}">Купить курс</a></p>
+<p>
+<p><a class="btn btn-primary"  href="/curses/subscribe/{{curse.curses_id}}" role="button">Добавить курс в корзину</a>  
+<a class="btn btn btn-secondary"  href="/curses" role="button">Вернуться к списку курсов</a> 
 
 {% endblock %}

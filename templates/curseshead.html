@@ -9,7 +9,11 @@
 <p><img class="col-md-8 col-sm-12" src="{{curse.picture}}"></p>
 <p><b>Стоимость курса: {{curse.cost}} рублей </b></p>
 <p>{{curse.description}}</p>
-<p><a class="btn btn-primary"  href="/curses/subscribe/{{curse.curses_id}}" role="button">Добавить курс в корзину</a> <a class="btn btn btn-success"  href="/basket?curslist={{curse.curses_id}}&cursid={{curse.curses_id}}" role="button">Перейти в корзину</a></p>
+<p>
+<a class="btn btn btn-secondary"  href="/curses/{{curse.curses_id}}" role="button">Перейти на страницу курса</a> 
+<a class="btn btn-primary"  href="/curses/subscribe/{{curse.curses_id}}" role="button">Добавить курс в корзину</a> 
+<a class="btn btn btn-success"  href="/basket" role="button">Перейти в корзину</a>
+</p>
 {% endfor %}
 
 {% endblock %}
