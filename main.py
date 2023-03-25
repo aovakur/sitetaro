@@ -25,8 +25,8 @@ import asyncio
 
 app = Flask(__name__)
 
-engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")
-'''engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")'''
+'''engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")'''
+engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")
 session = Session(bind=engine)
 Base = declarative_base()
 
@@ -313,8 +313,8 @@ rubashka = "http://centr-taro-ferre.ru/static/taro/rubashka.jpg"
 param = 0
 logger_info = None
 header ={}
-registration = None
 userprofile = None
+registration = None
 superUser = None
 
 class Logger_info:
@@ -382,12 +382,17 @@ class Registration:
     def getlencurs(self):
         return len(curs_list)
     
+    def cursetobuy(self):
+        global header
+        header['curstobuy'] = self.curs_count
+        header['curstobuylist'] = self.curs_list  
+
     def getcurse(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(self.curs_list)).all()
+        curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
         return curses 
 
     def getcast(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(self.curs_list)).all()
+        curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
         temp = 0
         for cur in curses:  
             temp = cur.cost + temp
@@ -418,8 +423,9 @@ async def index():
         randomcard= await OnlineTaro.cardday()
         context = await OnlineTaro.getrandomcard()
         title = "Главная страница "
-    finally:
         return render_template('start.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url)
+    except:
+        abort(404)
 
 @app.route('/curses/')
 @app.route('/curses')
@@ -431,34 +437,33 @@ async def curses_head():
         curses = session.query(Curses).all()
         for curs in curses:
             curs.description = Markup(curs.description)
-    finally:
         return render_template('curseshead.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curses = curses)
+    except: 
+        except(404)
 
 
 @app.route('/basket')
 async def basket():
-    global registration
     try:
             randomcard= await OnlineTaro.cardday()
             title = "Корзина"
-            
             curs = registration.getcurse()
             if (registration.curs_count >= 2):
                 registration.discont = "10%"
             registration.getcast()
             registration.cost_final=registration.cost - registration.discont
-
-
-    finally:
-            return render_template('basket.html',header=header,randomcard=randomcard, curstubuy=registration.curs_count,curstobuylist=registration.curs_list, title = title, share_url=request.base_url, curs = curs, cost = registration.cost, discount = registration.discont, cost_final = registration.cost_final)   
+            return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = registration.cost, discount = registration.discont, cost_final = registration.cost_final)   
+    except:
+        abort(404)
 
 @app.route('/reset')
 async def reset():
     try:
         randomcard=await OnlineTaro.cardday()
         title = "Сброс пароля"
-    finally:
         return render_template('reset.html', header = header,randomcard=randomcard, title = title)
+    except: 
+        abort(404)
 
 
 @app.route('/curses/<int:curs_id>/')
@@ -485,8 +490,9 @@ def subscribe_curs(curs_id):
             registration.curs_list.append(curs_id)
             registration.curs_count +=1
             registration.cursetobuy()
-    finally: 
         return redirect(url_for('curses_head'))
+    except: 
+        abort(404)
     
 @app.route('/backoffice/userlist/<string:user_id>',methods=['POST','GET'])
 @authorization_verification
@@ -496,8 +502,9 @@ def userlist_user(user_id):
             logger_info.logger(request.method,request.base_url, userprofile.first_name)
         else:
             logger_info.logger(request.method,request.base_url, userprofile.first_name)
-    finally:
         return render_template('userlist.html',data = users_list, header=header, rule=userprofile.rule)
+    except: 
+        abort(404)
 
 @app.route('/backoffice/userlist')
 @authorization_verification
@@ -506,8 +513,9 @@ def userlist():
         title ="Список пользователь"
         logger_info.logger(request.method,request.base_url, userprofile.first_name)
         users_list = session.query(Users).order_by(Users.id.desc()).all()
-    finally:
         return render_template('userlist.html',data = users_list, header=header, title = title, rule=userprofile.rule)
+    except: 
+        abort(404)
 
 
 @app.route('/backoffice/userlogs')
@@ -516,15 +524,19 @@ def userlist():
 def userlogs():
     try: 
         logger_info.logger(request.method,request.base_url, userprofile.first_name)
-    finally: 
         return render_template('userlogs.html', header=header, rule=userprofile.rule)
+    except: 
+        abort(404)
 
 @app.route('/backoffice/')
 @app.route('/backoffice')
 @authorization_verification
 def backoffice():
+    try: 
         logger_info.logger(request.method,request.base_url,userprofile.email) 
         return render_template('layout_lk.html', header=header, rule=userprofile.rule)    
+    except: 
+        abort(404)
 
 
 @app.route('/backoffice/curses/')
@@ -544,8 +556,10 @@ def curses():
             context = session.query(Curses).all()
         except: 
             session.rollback()
-    finally:
+
         return render_template('curses.html', context = context, header=header, title =title, errorcurs = error_curs)
+    except: 
+        abort(404)
 
 @app.route('/backoffice/curses/<int:curses_id>/del=<string:delit>', methods=['GET', 'POST'])
 @authorization_verification
@@ -574,7 +588,7 @@ def cursesdel(curses_id,delit):
 
             return redirect(url_for('curses'))
     except:
-        return redirect(url_for('curses'))
+        return abort(404)
 
 
 
@@ -608,7 +622,7 @@ def lessonadd(curses_id):
         else:
             return render_template('lessonnew.html', curses_id = curses_id, count_lesson = count_lesson) 
     except:
-        return render_template('lessonnew.html', curses_id = curses_id, count_lesson = count_lesson)  
+        abort(404)
 
        
 @app.route('/backoffice/addcurse/', methods=['GET', 'POST'])
@@ -645,7 +659,7 @@ def addcurse():
             logger_info.logger(request.method,request.base_url, userprofile.email)
             return render_template('addcurse.html', user = userprofile.email, title = title,  header=header)
     except: 
-        return render_template('addcurse.html', user = userprofile.email, title = title,  header=header)
+        return abort(404)
 
 @app.route('/backoffice/curses/<int:curses_id>', methods=['GET', 'POST'])
 @app.route('/backoffice/curses/<int:curses_id>', methods=['GET', 'POST'])
@@ -655,8 +669,10 @@ def lessons(curses_id):
         title = "Курс " + str(curses_id)
         logger_info.logger(request.method,request.base_url, userprofile.email)
         lessons = session.query(Lessons.curse,Lessons.name,Lessons.description,Lessons.lesson,Lessons.created_on).filter(Lessons.curse == curses_id).all()
-    finally:
         return render_template('lessons.html', lessons = lessons, curse = curses_id, title = title, header=header)
+    finally:
+        abort(404)
+       
 
 @app.route('/backoffice/curses/<int:curses_id>/<int:lesson_id>/del=<string:delit>', methods=['GET', 'POST'])
 @authorization_verification
@@ -674,9 +690,10 @@ def lessondel(curses_id,lesson_id,delit):
                     except Exception as E:
                         transaction.rollback()   
                         logger_info.logger(request.method,request.base_url, userprofile.email, E)
-                
+        return redirect(f"/backoffice/curses/{curses_id}")        
     finally:
-        return redirect(f"/backoffice/curses/{curses_id}")
+        abort(404)
+       
 
 
 @app.route('/backoffice/curses/edit=<int:curse_id>', methods=['GET', 'POST'])
@@ -710,7 +727,7 @@ def cursedit(curse_id):
             data =  context.description
             return render_template('curseedit.html', context = context, user = userprofile.email, data = data, title = "Курс" + str(curse_id), header = header)
     except: 
-       return redirect(f"backoffice/curses/edit={curse_id}") 
+        abort(404)
 
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>/', methods=['GET', 'POST'])
 @app.route('/backoffice/curses/edit/curs=<int:curses_id>&lesson=<int:lesson_id>', methods=['GET', 'POST'])
@@ -777,7 +794,7 @@ def lessonedit(curses_id,lesson_id):
                 homework = lesson.homework
                 return render_template('lessonedit.html', lesson = lesson, data=data, homework = homework)      
     except:
-        return render_template('lessonedit.html', lesson = lesson, data = data, homework = homework)
+        abort(404)
 
 
 @app.route('/backoffice/curses/view/curs=<int:curses_id>&lesson=<int:lesson_id>', methods=['GET', 'POST'])
@@ -789,8 +806,10 @@ def lessonview(curses_id,lesson_id):
         lessondata = session.query(Lessons).filter(and_(Lessons.curse  == curses_id, Lessons.lesson == lesson_id)).first()
         data = Markup(lessondata.data)
         homework = Markup(lessondata.homework)
-    finally: 
         return render_template('lesson.html', data =data, homework = homework, title = title, header=header)
+    except: 
+        abort(404)
+        
 
 
 @app.route('/backoffice/settings', methods=['GET', 'POST'])
@@ -831,7 +850,7 @@ def setting():
             logger_info.logger(request.method,request.base_url, userprofile.first_name)
             return render_template('setting.html', data = session_data, title = title, header=header)
     except: 
-        return render_template('setting.html', data = session_data, title = title, header=header)
+        abort(404)
 
 
 @app.route('/backoffice/taroedit/<int:card_id>', methods=['GET', 'POST'])
@@ -902,7 +921,7 @@ def taroonlineeditcard(card_id=1):
             context2 = session.query(Onlinetaro).filter(Onlinetaro.id == int(card_id)).first() 
             return render_template('taroonlineedit.html', data = context, data2=context2, title= "Редактирование Таро карт", header=header)
     except: 
-        return render_template('taroonlineedit.html', data = context, data2=context2, title= "Редактирование Таро карт", header=header)
+        abort(404)
 
  
        
@@ -911,8 +930,9 @@ def taroonlineeditcard(card_id=1):
 def taroonlineedit():
     try: 
         context = session.query(Onlinetaro).all() 
-    finally: 
         return render_template('taroonlineedit.html', data = context, title= "Редактирование Таро карт", header=header)
+    except: 
+        abort(404)
 
 @app.route('/login')
 async def login_user():
@@ -934,7 +954,7 @@ async def login_user():
         except:  
             return url
     except:
-        return render_template('/auth/login.html',error = "Ошибка в логине или пароле", header=header, title= title, share_url=request.base_url, randomcard = randomcard)   
+        abort(404)  
 
     
 @app.route('/auth/login', methods=['POST', 'GET'])
@@ -976,7 +996,7 @@ async def login_auth():
         if request.method == 'GET':
             return redirect(url_for('login_user'))
     except:
-        return redirect(url_for('login_user'))
+        abort(404)
 
            
 @app.route('/logout')
@@ -987,8 +1007,9 @@ def logout():
         flash('You were logged out')
         global userprofile
         userprofile = ""
-    finally: 
         return redirect(url_for('index'))
+    except: 
+        abort(404)
 
 
 @app.route('/taro/<string:category>/', methods=['GET', 'POST'])
@@ -1055,7 +1076,7 @@ def getmatch(name):
         array.append(kubki)
         return array
     except: 
-        return "0"
+        abort(404)
 
 
 @app.route('/taro/<string:category>/<string:name>', methods=['GET', 'POST'])
@@ -1081,9 +1102,9 @@ async def taro():
         context = session.query(Onlinetaro).all()
         description = "Для точного и правдивого гадания на картах Таро нужно знать подробное значение этих карт. Стандартная колода состоит из 78 карт, каждая из которых имеет определенное значение как и в прямом, так и в перевернутом положении. Ниже представлен список всех Таро карт с подробным толкованием на все случаи жизни: ближайшее будущее, ситуация или вопрос, гадание на любовь и отношения, гадание на мысли, ситуацию в работе и многое другое."
         keywords = "Карты, таро, таролог, аркан"
-    finally: 
         return render_template('taro.html', data = context, all="1", url = url, randomcard=randomcard, description = description,descriptioncategory=0, title = title, share_url=request.base_url, keywords =keywords, header=header)
-
+    except: 
+        abort(404)    
 
 @app.route('/backoffice/taro/')
 @app.route('/backoffice/taro')
@@ -1093,8 +1114,9 @@ async def backofficetaro():
         title = "Карты Таро: Значение и толкование"
         url="/backoffice/taro/"
         context = session.query(Onlinetaro).all()
-    finally:
         return render_template('backoffice_taro.html', data = context, all="1", url = url, randomcard=randomcard, title = title)
+    except:
+        abort(404)
 
 
 @app.route('/backoffice/taro/<string:category>/', methods=['GET', 'POST'])
@@ -1137,8 +1159,9 @@ def backoffitarotarocard(category, name):
         title=str(context.carta)+ "— обозначение "+context.carta+" в Таро, значение в отношениях и любви, сочетание с другими картами, толкование перевернутой карты Уэйта Райдера"
         array= getmatch(name)
         context2 = session.query(Onlinetaro.img,Onlinetaro.carta,Onlinetaro.eng, Onlinetaro.type_carta_eng).all()
-    finally:
         return render_template('backtarocard.html', data = context, data2=context2, url=url, title=title, array=array, curs = "1", title2=context.name_carta)
+    except:
+        abort(404)
 
 
 @app.route('/taroonline/')
@@ -1146,8 +1169,9 @@ def backoffitarotarocard(category, name):
 async def taroonline():
     try:
         randomcard=await OnlineTaro.cardday()
-    finally: 
         return render_template('taroonline.html', randomcard=randomcard, header=header)
+    except:
+        abort(404)
 
 @app.route('/taroonline/vokzal/', methods=['GET', 'POST'])
 @app.route('/taroonline/vokzal', methods=['GET', 'POST'])
@@ -1279,8 +1303,9 @@ async def man():
 async def pifagor():
     try:
         randomcard= await OnlineTaro.cardday()
-    finally: 
         return render_template('pifagor.html', randomcard=randomcard, header=header)
+    except:
+        abort(404)
 
 def getsiteparam(item="all"):
     settings = ""
@@ -1298,8 +1323,9 @@ async def page_not_found(e):
     try: 
         randomcard = await OnlineTaro.cardday()
         context = await OnlineTaro.getrandomcard()
-    finally:
         return render_template('404.html',card = context, randomcard=randomcard, header = header), 404
+    except: 
+        abort(404)
 
 @app.errorhandler(403)
 async def forbidden(e):
@@ -1308,8 +1334,9 @@ async def forbidden(e):
     try: 
         randomcard =await OnlineTaro.cardday()
         context = await OnlineTaro.getrandomcard()
-    finally: 
         return render_template('403.html',card = context, randomcard=randomcard, header = header), 403
+    except:
+        abort(404)
 
 @app.errorhandler(500)    
 async def internal_server_error(e):
@@ -1318,8 +1345,9 @@ async def internal_server_error(e):
     try: 
         randomcard=await OnlineTaro.cardday()
         context =await OnlineTaro.getrandomcard()
-    finally: 
         return render_template('404.html',card = context, randomcard=randomcard, header = header), 500
+    except:
+        abort(404)
 
 
 class Api():
@@ -1411,10 +1439,9 @@ if __name__ == "__main__":
     Settings.getglobalsettings()
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    '''app.run(host='0.0.0.0',port=80,debug=True)'''
-    serve(app,host='0.0.0.0',port=80)
+    app.run(host='0.0.0.0',port=80,debug=True)
+    '''serve(app,host='0.0.0.0',port=80)'''
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
 
-v
