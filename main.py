@@ -447,6 +447,7 @@ async def curses_head():
 
 @app.route('/basket')
 async def basket():
+    ses['discont']='10%'
     title = "Корзина "
     curs = registration.getcurse()
     registration.getcast()
@@ -1440,9 +1441,8 @@ if __name__ == "__main__":
     Settings.getglobalsettings()
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    app.run(host='0.0.0.0',port=80,debug=True)
-    
-    '''serve(app,host='0.0.0.0',port=80)'''
+    '''app.run(host='0.0.0.0',port=80,debug=True)'''
+    serve(app,host='0.0.0.0',port=80)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
