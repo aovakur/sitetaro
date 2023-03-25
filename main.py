@@ -377,9 +377,7 @@ class Registration:
         self.curs_list = []
         self.curs_count = 0
         self.discont = 10
-        self.cost=0;
-        self.cost_final=0;
-
+        
     def getlencurs(self):
         return self.curs_list
 
