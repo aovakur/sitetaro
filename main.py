@@ -439,7 +439,7 @@ async def curses_head():
             curs.description = Markup(curs.description)
         return render_template('curseshead.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curses = curses)
     except: 
-        except(404)
+        abort(404)
 
 
 @app.route('/basket')
