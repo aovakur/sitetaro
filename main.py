@@ -426,7 +426,11 @@ async def index():
         randomcard= await OnlineTaro.cardday()
         context = await OnlineTaro.getrandomcard()
         title = "Главная страница "
-        return render_template('start.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url)
+        if 'reg' in ses: 
+            curstobuy=ses['reg']
+        else: 
+            curstobuy=0
+        return render_template('start.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url,curstobuy=curstobuy)
     except:
         abort(404)
 
@@ -440,19 +444,31 @@ async def curses_head():
         curses = session.query(Curses).all()
         for curs in curses:
             curs.description = Markup(curs.description)
-        return render_template('curseshead.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curses = curses)
+        if 'reg' in ses: 
+            curstobuy=ses['reg']
+        else: 
+            curstobuy=0
+        return render_template('curseshead.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curses = curses,curstobuy=curstobuy)
     except: 
         abort(404)
 
 
 @app.route('/basket')
 async def basket():
+<<<<<<< HEAD
     ses['discont']='10%'
+=======
+    if 'reg' in ses: 
+            curstobuy=ses['reg']
+        else: 
+            curstobuy=0
+    ses['discont'] = '10%'
+>>>>>>> 9e42d5acdf7063a0bd164c1dcefb8714842d5613
     title = "Корзина "
     curs = registration.getcurse()
     registration.getcast()
     randomcard= await OnlineTaro.cardday()
-    return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = ses['cost'], discount = ses['discont'], cost_final = ses['total_cost'], curstobuy=ses['reg'])   
+    return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = ses['cost'], discount = ses['discont'], cost_final = ses['total_cost'], curstobuy=curstobuy)   
     
 
 @app.route('/reset')
