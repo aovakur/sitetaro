@@ -212,8 +212,8 @@ button.btnclick:hover, a.bot8:focus {
       </div>
 
       <div class="basket">
-       {% if curstobuy != 0%}
-      <a href="/basket?curslist={{curstobuy}}&cursid={{curstobuylist}}">Корзина &nbsp;</a>  
+       {% if curstobuy != 0 %}
+      <a href="/basket">Корзина &nbsp;</a><a href="/basket">(Вам необходимо оплатить выбранные курсы)</a>   
      
       {% endif %} 
       </div>

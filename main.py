@@ -317,6 +317,7 @@ userprofile = None
 registration = None
 superUser = None
 
+
 class Logger_info:
     @staticmethod
     def logger(request,operation,name, error="0"):
@@ -375,29 +376,30 @@ class Registration:
     def __init__(self):
         self.curs_list = []
         self.curs_count = 0
-        self.discont = 0
+        self.discont = 10
         self.cost=0;
         self.cost_final=0;
 
     def getlencurs(self):
-        return len(curs_list)
-    
-    def cursetobuy(self):
-        '''global header'''
-        '''header['curstobuy'] = self.curs_count'''
-        '''header['curstobuylist'] = self.curs_list  '''
-
+        return self.curs_list
 
     def getcurse(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(session['curstobuy'])).all()
+        curses = session.query(Curses).filter(Curses.curses_id.in_(ses['reg'])).all()
         return curses 
 
     def getcast(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(session['curstobuy'])).all()
-        temp = 0
-        for cur in curses:  
-            temp = cur.cost + temp
-        session['cost'] = temp
+        try:
+            curses = session.query(Curses).filter(Curses.curses_id.in_(ses['reg'])).all()
+            temp = 0
+            for cur in curses:  
+                temp = cur.cost + temp
+            ses['cost'] = temp
+
+            if len(ses['reg'])>=2:
+                ses['discont']="10%"
+                ses['total_cost'] = int(90*int(ses['cost'])/100)
+        except: 
+            abort(404)
 
 class Header():
     pass
@@ -445,7 +447,11 @@ async def curses_head():
 
 @app.route('/basket')
 async def basket():
-    return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = ses['cost'], discount = 0, cost_final = 00,curstobuy=ses['curstobuy'], cursetobuylist=ses['curstobuylist'])   
+    title = "Корзина "
+    curs = registration.getcurse()
+    registration.getcast()
+    randomcard= await OnlineTaro.cardday()
+    return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = ses['cost'], discount = ses['discont'], cost_final = ses['total_cost'], curstobuy=ses['reg'])   
     
 
 @app.route('/reset')
@@ -473,7 +479,23 @@ async def curse_alone(curs_id):
 @app.route('/curses/subscribe/<int:curs_id>/')
 @app.route('/curses/subscribe/<int:curs_id>')
 def subscribe_curs(curs_id):
-    
+    try:
+        for i in ses['reg']:
+            if (int(i) == int(curs_id)):
+                ses['find'] = 1
+                break
+            else: 
+                ses['find'] = 0
+
+        if ses['find'] == 0:
+            ses['reg'].append(curs_id) 
+ 
+    except: 
+        ses['reg'] = []
+        app.logger.info('except')
+        ses['reg'].append(curs_id) 
+
+    app.logger.info(ses['reg'])
     return redirect(url_for('curses_head'))
 
     
@@ -1419,6 +1441,7 @@ if __name__ == "__main__":
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
     app.run(host='0.0.0.0',port=80,debug=True)
+    
     '''serve(app,host='0.0.0.0',port=80)'''
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
