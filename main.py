@@ -453,15 +453,12 @@ async def curses_head():
 
 @app.route('/basket')
 async def basket():
-<<<<<<< HEAD
     ses['discont']='10%'
-=======
     if 'reg' in ses: 
-            curstobuy=ses['reg']
-        else: 
-            curstobuy=0
+       curstobuy=ses['reg']
+    else: 
+       curstobuy=0
     ses['discont'] = '10%'
->>>>>>> 9e42d5acdf7063a0bd164c1dcefb8714842d5613
     title = "Корзина "
     curs = registration.getcurse()
     registration.getcast()
