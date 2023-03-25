@@ -383,20 +383,21 @@ class Registration:
         return len(curs_list)
     
     def cursetobuy(self):
-        global header
-        header['curstobuy'] = self.curs_count
-        header['curstobuylist'] = self.curs_list  
+        '''global header'''
+        '''header['curstobuy'] = self.curs_count'''
+        '''header['curstobuylist'] = self.curs_list  '''
+
 
     def getcurse(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
+        curses = session.query(Curses).filter(Curses.curses_id.in_(session['curstobuy'])).all()
         return curses 
 
     def getcast(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
+        curses = session.query(Curses).filter(Curses.curses_id.in_(session['curstobuy'])).all()
         temp = 0
         for cur in curses:  
             temp = cur.cost + temp
-        self.cost = temp
+        session['cost'] = temp
 
 class Header():
     pass
@@ -444,17 +445,8 @@ async def curses_head():
 
 @app.route('/basket')
 async def basket():
-    try:
-            randomcard= await OnlineTaro.cardday()
-            title = "Корзина"
-            curs = registration.getcurse()
-            if (registration.curs_count >= 2):
-                registration.discont = "10%"
-            registration.getcast()
-            registration.cost_final=registration.cost - registration.discont
-            return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = registration.cost, discount = registration.discont, cost_final = registration.cost_final)   
-    except:
-        abort(404)
+    return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = ses['cost'], discount = 0, cost_final = 00,curstobuy=ses['curstobuy'], cursetobuylist=ses['curstobuylist'])   
+    
 
 @app.route('/reset')
 async def reset():
@@ -481,18 +473,9 @@ async def curse_alone(curs_id):
 @app.route('/curses/subscribe/<int:curs_id>/')
 @app.route('/curses/subscribe/<int:curs_id>')
 def subscribe_curs(curs_id):
-    try:
-        find = 0
-        for i in registration.curs_list:
-            if i==curs_id:
-                find=1
-        if find == 0:
-            registration.curs_list.append(curs_id)
-            registration.curs_count +=1
-            registration.cursetobuy()
-        return redirect(url_for('curses_head'))
-    except: 
-        abort(404)
+    
+    return redirect(url_for('curses_head'))
+
     
 @app.route('/backoffice/userlist/<string:user_id>',methods=['POST','GET'])
 @authorization_verification
@@ -543,14 +526,12 @@ def backoffice():
 @app.route('/backoffice/curses')
 @authorization_verification
 def curses():
-    try: 
         error_curs = 0 
         if (userprofile.cursdelerrorcount == 0): 
             error_curs = userprofile.cursdelerror
             userprofile.cursdelerrorcount +=1
        
         title="Список курсов"
-
         try: 
             logger_info.logger(request.method,request.base_url, userprofile.first_name)
             context = session.query(Curses).all()
@@ -558,8 +539,6 @@ def curses():
             session.rollback()
 
         return render_template('curses.html', context = context, header=header, title =title, errorcurs = error_curs)
-    except: 
-        abort(404)
 
 @app.route('/backoffice/curses/<int:curses_id>/del=<string:delit>', methods=['GET', 'POST'])
 @authorization_verification
@@ -670,7 +649,7 @@ def lessons(curses_id):
         logger_info.logger(request.method,request.base_url, userprofile.email)
         lessons = session.query(Lessons.curse,Lessons.name,Lessons.description,Lessons.lesson,Lessons.created_on).filter(Lessons.curse == curses_id).all()
         return render_template('lessons.html', lessons = lessons, curse = curses_id, title = title, header=header)
-    finally:
+    except:
         abort(404)
        
 
@@ -1444,4 +1423,3 @@ if __name__ == "__main__":
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
-
