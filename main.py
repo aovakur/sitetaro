@@ -25,8 +25,8 @@ import asyncio
 
 app = Flask(__name__)
 
-'''engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")'''
-engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")
+engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")
+'''engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")'''
 session = Session(bind=engine)
 Base = declarative_base()
 
@@ -313,8 +313,8 @@ rubashka = "http://centr-taro-ferre.ru/static/taro/rubashka.jpg"
 param = 0
 logger_info = None
 header ={}
-userprofile = None
 registration = None
+userprofile = None
 superUser = None
 
 class Logger_info:
@@ -382,17 +382,12 @@ class Registration:
     def getlencurs(self):
         return len(curs_list)
     
-    def cursetobuy(self):
-        global header
-        header['curstobuy'] = self.curs_count
-        header['curstobuylist'] = self.curs_list  
-
     def getcurse(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
+        curses = session.query(Curses).filter(Curses.curses_id.in_(self.curs_list)).all()
         return curses 
 
     def getcast(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(registration.curs_list)).all()
+        curses = session.query(Curses).filter(Curses.curses_id.in_(self.curs_list)).all()
         temp = 0
         for cur in curses:  
             temp = cur.cost + temp
@@ -442,10 +437,11 @@ async def curses_head():
 
 @app.route('/basket')
 async def basket():
-
+    global registration
     try:
             randomcard= await OnlineTaro.cardday()
             title = "Корзина"
+            
             curs = registration.getcurse()
             if (registration.curs_count >= 2):
                 registration.discont = "10%"
@@ -454,7 +450,7 @@ async def basket():
 
 
     finally:
-            return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = registration.cost, discount = registration.discont, cost_final = registration.cost_final)   
+            return render_template('basket.html',header=header,randomcard=randomcard, curstubuy=registration.curs_count,curstobuylist=registration.curs_list, title = title, share_url=request.base_url, curs = curs, cost = registration.cost, discount = registration.discont, cost_final = registration.cost_final)   
 
 @app.route('/reset')
 async def reset():
@@ -1415,9 +1411,10 @@ if __name__ == "__main__":
     Settings.getglobalsettings()
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    app.run(host='0.0.0.0',port=80,debug=True)
-    '''serve(app,host='0.0.0.0',port=80)'''
+    '''app.run(host='0.0.0.0',port=80,debug=True)'''
+    serve(app,host='0.0.0.0',port=80)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
 
+v

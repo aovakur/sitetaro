@@ -212,10 +212,10 @@ button.btnclick:hover, a.bot8:focus {
       </div>
 
       <div class="basket">
-       {% if header['curstobuy'] %}
-      <a href="/basket?curslist={{header['curstobuy']}}&cursid={{header['curstobuylist']}}">Корзина &nbsp;</a>  
+       {% if curstobuy != 0%}
+      <a href="/basket?curslist={{curstobuy}}&cursid={{curstobuylist}}">Корзина &nbsp;</a>  
      
-      <a href="/basket?curslist={{header['curstobuy']}}&cursid={{header['curstobuylist']}}">( {% if header['curstobuy'] %} {{header['curstobuy']}} {% endif %} курса)</a> 
+      <a href="/basket?curslist={{curstobuy}}&cursid={{curstobuylist}}">( {% if curstobuy %} {{curstobuy}} {% endif %} курса)</a> 
       {% endif %} 
       </div>
     
