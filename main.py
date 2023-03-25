@@ -25,8 +25,8 @@ import asyncio
 
 app = Flask(__name__)
 
-'''engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")'''
-engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")
+engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")
+'''engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")'''
 session = Session(bind=engine)
 Base = declarative_base()
 
@@ -453,11 +453,15 @@ async def curses_head():
 
 @app.route('/basket')
 async def basket():
+<<<<<<< HEAD
+    ses['discont']='10%'
+=======
     if 'reg' in ses: 
             curstobuy=ses['reg']
         else: 
             curstobuy=0
     ses['discont'] = '10%'
+>>>>>>> 9e42d5acdf7063a0bd164c1dcefb8714842d5613
     title = "Корзина "
     curs = registration.getcurse()
     registration.getcast()
@@ -1451,9 +1455,8 @@ if __name__ == "__main__":
     Settings.getglobalsettings()
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    app.run(host='0.0.0.0',port=80,debug=True)
-    
-    '''serve(app,host='0.0.0.0',port=80)'''
+    '''app.run(host='0.0.0.0',port=80,debug=True)'''
+    serve(app,host='0.0.0.0',port=80)
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
