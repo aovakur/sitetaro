@@ -396,6 +396,10 @@ class Registration:
             if len(ses['reg'])>=2:
                 ses['discont']="10%"
                 ses['total_cost'] = int(90*int(ses['cost'])/100)
+            else: 
+                ses['discont']="0%"
+                ses['total_cost']=ses['cost']
+
         except: 
             abort(404)
 
