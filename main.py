@@ -382,7 +382,11 @@ class Registration:
         return self.curs_list
 
     def getcurse(self):
-        curses = session.query(Curses).filter(Curses.curses_id.in_(ses['reg'])).all()
+        if 'reg' in ses:
+           curses = session.query(Curses).filter(Curses.curses_id.in_(ses['reg'])).all()
+        else: 
+           curses = 0
+
         return curses 
 
     def getcast(self):
@@ -401,7 +405,9 @@ class Registration:
                 ses['total_cost']=ses['cost']
 
         except: 
-            abort(404)
+              ses['discont']="0%"
+              ses['total_cost']=0
+              ses['cost'] = 0
 
 class Header():
     pass
@@ -462,6 +468,10 @@ async def basket():
        curstobuy=ses['reg']
     else: 
        curstobuy=0
+       ses['discont'] = 0
+       ses['cost'] = 0
+       ses['total_cost'] = 0
+
     ses['discont'] = '10%'
     title = "Корзина "
     curs = registration.getcurse()

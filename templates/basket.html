@@ -18,7 +18,7 @@
               </tr>
             </thead>
             <tbody>
-
+              {% if curs != 0%}
               {% for data in curs %}
               <tr>
                 <th scope="row">
@@ -35,6 +35,7 @@
                 </td>
               </tr>
               {% endfor %}
+              {% endif %}
 
               
             </tbody>
