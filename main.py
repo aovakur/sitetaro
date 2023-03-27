@@ -6,6 +6,7 @@ from sqlalchemy import create_engine, MetaData, Table, Integer, String, Column, 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from sqlalchemy.orm import Session, sessionmaker
 import logging
 from flask import Flask,flash,request,redirect,send_file, jsonify, abort, Markup,render_template,session as ses
@@ -25,8 +26,8 @@ import asyncio
 
 app = Flask(__name__)
 
-engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")
-'''engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")'''
+'''engine = create_engine("mysql+pymysql://root:16Andrew93vak@localhost:3306/taro53")'''
+engine = create_engine("mysql+pymysql://root:aA123456@localhost:3306/taro51")
 session = Session(bind=engine)
 Base = declarative_base()
 
@@ -461,24 +462,92 @@ async def curses_head():
         abort(404)
 
 
-@app.route('/basket')
+@app.route('/basket',methods=['POST','GET'])
 async def basket():
-    ses['discont']='10%'
-    if 'reg' in ses: 
-       curstobuy=ses['reg']
-    else: 
-       curstobuy=0
-       ses['discont'] = 0
-       ses['cost'] = 0
-       ses['total_cost'] = 0
-
-    ses['discont'] = '10%'
-    title = "Корзина "
-    curs = registration.getcurse()
-    registration.getcast()
-    randomcard= await OnlineTaro.cardday()
-    return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = ses['cost'], discount = ses['discont'], cost_final = ses['total_cost'], curstobuy=curstobuy)   
     
+    if request.method=="GET":
+        arr = []
+        error= 0
+        ses['discont']='10%'
+        if 'reg' in ses: 
+           curstobuy=ses['reg']
+        else: 
+           curstobuy=0
+           ses['discont'] = 0
+           ses['cost'] = 0
+           ses['total_cost'] = 0
+
+        ses['discont'] = '10%'
+        title = "Корзина "
+        curs = registration.getcurse()
+        registration.getcast()
+        randomcard= await OnlineTaro.cardday()
+        if 'user_register' in ses:
+            dat = ses['user_register'] 
+            error = 1
+        else:
+            error = 0
+            dat = []
+
+        return render_template('basket.html',randomcard=randomcard, header=header, title = title, share_url=request.base_url, curs = curs, cost = ses['cost'], discount = ses['discont'], cost_final = ses['total_cost'], curstobuy=curstobuy, error = error, arr = dat)
+    
+    if request.method=="POST":
+        email = request.form['email']
+        password = request.form['pass']
+        password2 = request.form['pass2']
+        name = request.form['name']
+        surname  = request.form['surname']    
+        family = request.form['family']  
+        telephone= request.form['telephone'] 
+        telegram = request.form['telegram']
+        sbp = request.form['SBP']
+
+        if password ==password2 and email !=null and name !=null and password != null and password2 !=null and surname !=null and family!=null and telephone!=null and telegram!=null:
+            b = base64.b64encode(bytes(password, 'ascii')) # bytes
+            base64_password= b.decode('ascii') # convert bytes to string
+            app.logger.info(base64_password)
+            with engine.connect() as conn:
+                        transaction = conn.begin()
+                        usr = Users(first_name= name, last_name = surname, surname=family,telegram=telegram, whatsapp = telephone, email = email, rule=10,block=0, password=base64_password)
+                        session.add(usr)
+                        session.commit()
+                        session.flush()
+                        app.logger.info("ok")
+                        session.refresh(usr)
+                        app.logger.info(usr.id)
+                        dtObj = datetime.today()
+                        n = 3
+                        future_date = dtObj + relativedelta(months=n)
+                        
+                        if sbp=="True":
+                            data = ses['reg']
+                            for c in data:
+                                    order = Order(user_id = int(usr.id),curs_id=int(c),payment="3",payment_type=4, payment_code=0,payment_date=datetime.today(),date_expired = future_date )  
+                                    session.add(order)
+                                    session.commit()
+                                    app.logger.info("curs ok")
+                                    session.flush()
+                                    session.refresh(order)
+                            
+                            transaction.commit()
+                            transaction.close()
+                            ses.pop('user_register', None)
+                            ses.pop('reg', None)
+                            return redirect(url_for('basket'))  
+        else: 
+            arr = []
+            arr.append(email)
+            arr.append(password)
+            arr.append(password2)
+            arr.append(name)
+            arr.append(surname)
+            arr.append(family)
+            arr.append(telephone)
+            arr.append(telegram)
+            arr.append('1')
+            ses['user_register'] = arr
+            return redirect(url_for('basket'))
+ 
 
 @app.route('/reset')
 async def reset():
@@ -514,16 +583,28 @@ def subscribe_curs(curs_id):
                 ses['find'] = 0
 
         if ses['find'] == 0:
-            ses['reg'].append(curs_id) 
+            data = ses['reg']
+            data.append(curs_id) 
+            ses['reg'] = data
  
     except: 
         ses['reg'] = []
         app.logger.info('except')
-        ses['reg'].append(curs_id) 
+        data2= ses['reg']
+        data2.append(curs_id) 
+        ses['reg'] = data2
 
     app.logger.info(ses['reg'])
     return redirect(url_for('curses_head'))
 
+@app.route('/curses/unscribe/<int:curs_id>/')
+@app.route('/curses/unscribe/<int:curs_id>')
+def unscribe_curs(curs_id):
+    data = ses['reg']
+    data.remove(curs_id)
+    ses['reg'] = data
+    app.logger.info(ses['reg'])
+    return redirect(url_for('basket'))
     
 @app.route('/backoffice/userlist/<string:user_id>',methods=['POST','GET'])
 @authorization_verification
@@ -1466,8 +1547,8 @@ if __name__ == "__main__":
     Settings.getglobalsettings()
     registration = Registration()
     app.config['SECRET_KEY'] = '56756756756757wqwreewdewfderffdrwerwffretewe43ewt'    
-    '''app.run(host='0.0.0.0',port=80,debug=True)'''
-    serve(app,host='0.0.0.0',port=80)
+    app.run(host='0.0.0.0',port=80,debug=True)
+    '''serve(app,host='0.0.0.0',port=80)'''
     app.register_error_handler(404, page_not_found)
     app.register_error_handler(403, forbidden)
     app.register_error_handler(500, internal_server_error)
