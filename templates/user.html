@@ -1,0 +1,85 @@
+{% extends "layout_lk.html" %}
+
+{% block content %}
+                            <div class="table-responsive">
+<h2>Данные пользователя </h2>
+<p>{{profile.first_name}}</p>
+<p>{{profile.last_name}}</p>
+<p>{{profile.surname}}</p>
+<p>{{profile.telegram}}</p>
+<p>{{profile.whatsapp}}</p>
+<p>{{profile.email}}</p>
+<p>{{profile.created_on}}</p>
+<p>{{profile.updated_on}}</p>
+<p>{{profile.rule}}</p>
+<p>{{profile.block}}</p>
+<p>{{profile.password}}</p>
+
+
+<h2>Выбранные курсы пользователя </h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Курс</th>
+      <th scope="col">Вид оплаты</th>
+      <th scope="col">Статус оплаты</th>
+      <th scope="col">Дата покупки курса</th>
+      <th scope="col">Дата закрытия курса</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for dat1 in data %}   
+    <tr>
+      <th scope="row">{{dat1.curs_id}}</th>
+           {% for cur in curses %}
+          
+          {% if cur.curses_id == dat1.curs_id %}
+          <td> <b><a href="/backoffice/curses/{{dat1.curs_id}}">{{ cur.name }}</b></td>
+          {% endif %}
+
+      {% endfor %} 
+     {% if dat1.payment_type == "4" %}
+      <td>
+      Система СБП
+      </td>
+       {% endif %}
+      
+      <td>    
+    
+<select name="user_pay" onchange="window.location.href = this.options[this.selectedIndex].value">
+  {% if dat1.payment== "1" %}
+  <option value={{dat1.payment_type}} selected disabled>Оплачено</option>
+  {% endif %}
+
+  {% if dat1.payment== "2" %}
+  <option value={{dat1.payment_type}} selected disabled>Не оплачен</option>
+  {% endif %}
+
+  {% if dat1.payment== "3" %}
+  <option value={{dat1.payment_type}} selected disabled>Подтвержден</option>
+  {% endif %}
+  
+  
+  {% for p in pay %}
+  <option value="/backoffice/userlist/changestatus/{{id}}/{{dat1.curs_id}}/{{p.id}}">{{p.name}}</option>
+  {% endfor %}
+</select>
+
+</td>
+
+      
+
+      <td>{{dat1.payment_date}}</td>
+      <td>{{dat1.date_expired}}</td>
+    </tr>
+ 
+
+{% endfor %}
+ </tbody>
+</table>
+
+                            </div>
+                        
+
+{% endblock %}

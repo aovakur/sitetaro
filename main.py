@@ -607,16 +607,37 @@ def unscribe_curs(curs_id):
     return redirect(url_for('basket'))
     
 @app.route('/backoffice/userlist/<string:user_id>',methods=['POST','GET'])
-@authorization_verification
 def userlist_user(user_id):
-    try:
-        if request.method == "POST":
-            logger_info.logger(request.method,request.base_url, userprofile.first_name)
-        else:
-            logger_info.logger(request.method,request.base_url, userprofile.first_name)
-        return render_template('userlist.html',data = users_list, header=header, rule=userprofile.rule)
-    except: 
-        abort(404)
+    pay=session.query(Payment).all()
+    profile = session.query(Users).filter(Users.id == user_id).first()
+    curses = session.query(Curses).all()
+    user = session.query(Order).filter(Order.user_id == user_id).all()
+    return render_template('user.html',data = user, curses=curses, profile = profile, header=header, pay=pay, id = user_id )
+
+@app.route('/backoffice/userlist/changestatus/<string:user_id>/<string:curs_id>/<string:status_id>',methods=['POST','GET'])
+def userlist_uodatepay(user_id,curs_id,status_id):
+    with engine.connect() as conn:
+        transaction = conn.begin()
+        try:
+            x = session.query(Order).filter((Order.curs_id == curs_id) & (Order.user_id == user_id)).first()
+            app.logger.info(x.id)
+            dtObj = datetime.today()
+            n = 3
+            future_date = dtObj + relativedelta(months=n)
+
+            x.payment = status_id
+            x.payment_date = datetime.today()
+            x.date_expired = future_date
+
+            session.commit()
+            transaction.commit()
+        except Exception as E:
+            app.logger.info(f"{E}")
+            transaction.rollback()  
+
+    transaction.close()              
+    return redirect(f"/backoffice/userlist/{user_id}") 
+
 
 @app.route('/backoffice/userlist')
 @authorization_verification
@@ -1091,7 +1112,7 @@ async def login_auth():
                 userprofile.whatsapp = user.whatsapp
                 userprofile.email = user.email
                 userprofile.rule = user.rule
-                
+                ses['user_id'] = user.id
                 global logger_info
                 logger_info = Logger_info()
                 ses['log_in'] = True
